@@ -6,14 +6,16 @@
   flex-direction: column;
   background-color: white;
   align-items: center;
-  background-color: rgb(237, 237, 237);
+  background: #ece9e9;
   h1 {
-    background-color: rgb(237, 237, 237);
     width: 100vw;
     height: 30vh;
 
     display: flex;
     justify-content: center;
     font-size: 10vmin;
+    color: #ffffff;
+    background: #ece9e9;
+    text-shadow: 3px 5px 2px #474747;
   }
 }

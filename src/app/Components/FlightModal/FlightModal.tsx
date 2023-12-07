@@ -55,6 +55,18 @@ function FlightModal() {
         console.error(error);
       }
     };
+    // const getFlights = async () => {
+    //   try {
+    //     const response = await fetch(
+    //       "https://irs-api.samesoft.co/flight-schedule/search-flights"
+    //     );
+    //     const data = await response.json();
+    //     console.log("FLIGHTS", data);
+    //     setAirports(data);
+    //   } catch (error) {
+    //     console.error(error);
+    //   }
+    // };
     const getSeatClasses = async () => {
       try {
         const response1 = await fetch(
@@ -69,6 +81,7 @@ function FlightModal() {
     };
     getAirports();
     getSeatClasses();
+    //getFlights();
   }, []);
   /******************************** API CALLS ********************************/
   console.log(airports);
@@ -79,11 +92,16 @@ function FlightModal() {
       /*************** update Frontend /***************/
       setReturnSelected(true);
       setOneWaySelected(false);
+      const sectionDiv = document.getElementById("cardbody");
+      sectionDiv.style.backgroundColor = "rgb(90,151,290)";
+      console.log(sectionDiv);
       /*************** update backend /***************/
     } else if (e.target.id === "oneWay") {
       /*************** update Frontend /***************/
       setReturnSelected(false);
       setOneWaySelected(true);
+      const sectionDiv = document.getElementById("cardbody");
+      sectionDiv.style.backgroundColor = "rgb(235,126,40)";
       /*************** update backend /***************/
     }
   }
@@ -123,7 +141,7 @@ function FlightModal() {
           <Button
             onClick={setTripType}
             id="oneWay"
-            backgroundColor={"rgb(90,151,290)"}
+            backgroundColor={"rgb(235,126,40)"}
             color={"white"}
           >
             One-way

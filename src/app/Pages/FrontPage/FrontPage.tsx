@@ -6,7 +6,7 @@ import FlightModal from "@/app/Components/FlightModal/FlightModal";
 function Frontpage() {
   return (
     <div className={styles.FrontPage}>
-      <h1>Catch A Flight</h1>
+      <h1>FLIGHT CLUB</h1>
       <FlightModal />
     </div>
   );
