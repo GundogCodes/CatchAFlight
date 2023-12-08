@@ -60,8 +60,8 @@ function FlightModal() {
   }
 
   /******************************** STATES ********************************/
-  const [returnSelected, setReturnSelected] = useState(true);
-  const [oneWaySelected, setOneWaySelected] = useState(false);
+  const [returnSelected, setReturnSelected] = useState(false);
+  const [oneWaySelected, setOneWaySelected] = useState(true);
   const [airports, setAirports] = useState<Airport[]>([]);
   const [flightSchedules, setFlightSchedules] = useState<FlightSchedules[]>([]);
   const [allFlights, setAllFlights] = useState<Flight[]>([]);
@@ -86,7 +86,7 @@ function FlightModal() {
     const getAirports = async () => {
       try {
         const response = await fetch(
-          "https://irs-api-4e39390b0223.herokuapp.com/airport/list"
+          "https://irs-api-4e39390b0223.herokuapp.com/airport/get-all-airports"
         );
         const data = await response.json();
         setAirports(data);
@@ -156,7 +156,7 @@ function FlightModal() {
     const fromSelected = document.getElementById("selectedCity1");
     const h6 = document.getElementById("h6");
     fromSelected.innerText = chosenCity;
-    h6.innerText = `Departing from ${chosenCity}`;
+    h6.innerText = `Departing from ${chosenCity} Airport`;
   }
   function handleToSelect(e) {
     console.log(e.target.innerText);
@@ -165,7 +165,7 @@ function FlightModal() {
     fromSelected.innerText = chosenCity;
     const h62 = document.getElementById("h62");
     fromSelected.innerText = chosenCity;
-    h62.innerText = `Destination: ${chosenCity}`;
+    h62.innerText = `Destination: ${chosenCity} Airport`;
   }
 
   function handlePassenger(e) {
@@ -186,20 +186,6 @@ function FlightModal() {
       )}
       <aside>
         {/*************************** TRIP TYP BUTTONS ***************************/}
-        {returnSelected ? (
-          <Button
-            onClick={setTripType}
-            id="return"
-            backgroundColor={"rgb(90,151,290)"}
-            color={"white"}
-          >
-            Return
-          </Button>
-        ) : (
-          <Button onClick={setTripType} id="return">
-            Return
-          </Button>
-        )}
         {oneWaySelected ? (
           <Button
             onClick={setTripType}
@@ -212,6 +198,20 @@ function FlightModal() {
         ) : (
           <Button onClick={setTripType} id="oneWay">
             One-way
+          </Button>
+        )}
+        {returnSelected ? (
+          <Button
+            onClick={setTripType}
+            id="return"
+            backgroundColor={"rgb(90,151,290)"}
+            color={"white"}
+          >
+            Return
+          </Button>
+        ) : (
+          <Button onClick={setTripType} id="return">
+            Return
           </Button>
         )}
         <h3>Book A Flight</h3>
@@ -318,14 +318,12 @@ function FlightModal() {
                   {returnDate === "" && departureDate === "" ? (
                     <>
                       <h2 id={styles.line}> _______</h2>
-                      <h4>Date</h4>
-                      <h6>select departure date</h6>
+                      <h4>Select </h4>
                     </>
                   ) : (
                     <></>
                   )}
-                  {(returnSelected && returnDate !== "") ||
-                  departureDate !== "" ? (
+                  {returnSelected && returnDate ? (
                     <div className={styles.tripDisplay}>
                       <div>
                         <h2>Departure</h2>
@@ -349,7 +347,10 @@ function FlightModal() {
                       </div>
                     </div>
                   ) : (
-                    <div>
+                    <div className={styles.oneWayTrip}>
+                      <h2 style={{ borderBottom: "solid 1px black" }}>
+                        Departing Date
+                      </h2>
                       <h4>{departureDate.toString().slice(3, 7)}</h4>
                       <h4 id={styles.dateNum}>
                         {departureDate.toString().slice(7, 10)}
@@ -422,7 +423,7 @@ function FlightModal() {
                 <div className={styles.sectionCard}>
                   <h2 id={styles.line}> Passenger</h2>
                   <h4>Passenger</h4>
-                  <h6>select departure date</h6>
+                  <h6>Economy</h6>
                 </div>
               </MenuButton>
               <MenuList width={"25vw"} height={"40vh"} padding={"2px"}>
