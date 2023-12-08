@@ -1,0 +1,61 @@
+.ResultsModal {
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.5
+  ); /* Adjust the alpha value for transparency */
+  backdrop-filter: blur(10px); /* Adjust the blur radius as needed */
+  .modal {
+    border-radius: 6px;
+    width: 70vw;
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: white;
+    animation: fadeInUp 1s;
+    p {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      width: 70vw;
+      padding-left: 10px;
+      padding-top: 10px;
+    }
+    p:hover {
+      cursor: pointer;
+    }
+    h1 {
+      width: 70vw;
+      height: 5vh;
+      margin: 10px;
+      color: rgb(90, 151, 290);
+      display: flex;
+      align-items: center;
+      padding-left: 30px;
+      font-size: 25px;
+    }
+  }
+}
+@keyframes fadeInUp {
+  from {
+    transform: translate3d(0, 40px, 0);
+    opacity: 0.5;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}

@@ -159,7 +159,7 @@ function Frontpage() {
               <Image src="https://www.flydubai.com/en/media/skywards2_tcm8-163766_w265.jpg" />
               <span>Emirates Skywards</span>
               <br />
-              The Emirates Skywards programme has four membership tiers
+              The Emirates Skywards programme has ...
             </Text>
           </CardBody>
         </Card>
@@ -173,8 +173,7 @@ function Frontpage() {
               <Image src="https://www.flydubai.com/en/media/Buy-extras-flydubai-2x-668x460_tcm8-165717_w265.jpg" />
               <span>Holidays By FlightClub</span>
               <br />
-              We make it our mission to create exciting, memory-worthy and
-              pocket-friendly
+              We make it our mission to create exciting, memory ..
             </Text>
           </CardBody>
         </Card>
@@ -188,9 +187,7 @@ function Frontpage() {
               <Image src="https://www.flydubai.com/en/media/Holidays-callout-homepage-2x-668x460_tcm8-164517_w265.jpg" />
               <span>Add Extras</span>
               <br />
-              Select your preferred seat and meal, add travel insurance or
-              <br />
-              buy...
+              Select your preferred seat and meal, add ...
             </Text>
           </CardBody>
         </Card>
@@ -204,8 +201,7 @@ function Frontpage() {
               <Image src="https://www.flydubai.com/en/media/Flight-status-flydubai-2x-668x460_tcm8-168029_w265.jpg" />
               <span>Flight Status</span>
               <br />
-              Setting off for the airport? Before you go, here's where you can
-              ...
+              Setting off for the airport? Before you go, here's where ...
             </Text>
           </CardBody>
         </Card>

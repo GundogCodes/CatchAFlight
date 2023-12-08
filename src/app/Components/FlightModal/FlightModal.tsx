@@ -25,6 +25,7 @@ import {
 } from "@chakra-ui/react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import ResultsModal from "../ResultsModal/ResultsModal";
 function FlightModal() {
   /******************************** VARIABLES ********************************/
   interface Airport {
@@ -46,13 +47,25 @@ function FlightModal() {
     departureDateTime: string;
     arrivalDateTime: string;
   }
+  interface Flight {
+    aircraftId: string;
+    createdAt: string;
+    flightId: string;
+    flightNumber: number;
+    fromAirport: string;
+    toAirport: string;
+    totalBusinessClassSeats: number;
+    totalEconomyClassSeats: number;
+    totalFirstClassSeats: number;
+  }
 
   /******************************** STATES ********************************/
   const [returnSelected, setReturnSelected] = useState(true);
   const [oneWaySelected, setOneWaySelected] = useState(false);
   const [airports, setAirports] = useState<Airport[]>([]);
   const [flightSchedules, setFlightSchedules] = useState<FlightSchedules[]>([]);
-  const [resultsModal, setresultsModal] = useState(false);
+  const [allFlights, setAllFlights] = useState<Flight[]>([]);
+  const [resultsModal, setResultsModal] = useState(false);
   const [passangers, setPassengers] = useState({
     Adults: 0,
     Child: 0,
@@ -84,6 +97,17 @@ function FlightModal() {
     const getFlights = async () => {
       try {
         const response = await fetch(
+          "https://irs-api-4e39390b0223.herokuapp.com/flight/get-all-flights"
+        );
+        const data = await response.json();
+        setAllFlights(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    const getFlightSchedules = async () => {
+      try {
+        const response = await fetch(
           "https://irs-api-4e39390b0223.herokuapp.com/flight-schedule/get-all-flight-schedules"
         );
         const data = await response.json();
@@ -92,13 +116,15 @@ function FlightModal() {
         console.error(error);
       }
     };
-    getFlights();
+    getFlightSchedules();
     getAirports();
+    getFlights();
   }, []);
   /******************************** API CALLS ********************************/
   console.log("AIRPORTS", airports);
   console.log("SEAT CLASSES", seatClasses);
   console.log("FLIGHT SCHEDULES", flightSchedules);
+  console.log("ALL FLIGHTS", allFlights);
   /******************************** FUNCTIONS ********************************/
   function setTripType(e) {
     if (e.target.id === "return") {
@@ -146,11 +172,18 @@ function FlightModal() {
     console.log("PASSENGER MANIP");
     console.log(e);
   }
+  function handleSearch() {
+    setResultsModal(true);
+  }
   /******************************** CODE ********************************/
   console.log("DEPART ", departureDate, "RETURN ", returnDate);
   return (
     <div className={styles.FlightModal}>
-      {resultsModal ? <></> : <></>}
+      {resultsModal ? (
+        <ResultsModal userQuery={userQuery} setResultsModal={setResultsModal} />
+      ) : (
+        <></>
+      )}
       <aside>
         {/*************************** TRIP TYP BUTTONS ***************************/}
         {returnSelected ? (
@@ -410,7 +443,7 @@ function FlightModal() {
                           maxW={16}
                           defaultValue={0}
                           min={0}
-                          max={10}
+                          max={9}
                         >
                           <NumberInputField />
                           <NumberInputStepper>
@@ -426,7 +459,7 @@ function FlightModal() {
                           maxW={16}
                           defaultValue={0}
                           min={0}
-                          max={10}
+                          max={9}
                         >
                           <NumberInputField />
                           <NumberInputStepper>
@@ -442,7 +475,7 @@ function FlightModal() {
                           maxW={16}
                           defaultValue={0}
                           min={0}
-                          max={10}
+                          max={9}
                         >
                           <NumberInputField />
                           <NumberInputStepper>
@@ -462,7 +495,7 @@ function FlightModal() {
               </MenuList>
             </Menu>
             {/*************************** SEARCH BUTTON ***************************/}
-            <Button id="butt" className={styles.search}>
+            <Button id="butt" onClick={handleSearch} className={styles.search}>
               Search Flights
             </Button>
           </CardBody>
