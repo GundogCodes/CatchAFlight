@@ -29,6 +29,10 @@ function FlightModal() {
   /******************************** VARIABLES ********************************/
   interface Airport {
     airportCode: string;
+    airportId: string;
+    airportName: string;
+    city: string;
+    country: string;
   }
   interface SeatClass {
     className: string;
@@ -48,11 +52,19 @@ function FlightModal() {
   const [oneWaySelected, setOneWaySelected] = useState(false);
   const [airports, setAirports] = useState<Airport[]>([]);
   const [flightSchedules, setFlightSchedules] = useState<FlightSchedules[]>([]);
+  const [resultsModal, setresultsModal] = useState(false);
+  const [passangers, setPassengers] = useState({
+    Adults: 0,
+    Child: 0,
+    Infant: 0,
+    seatClass: "string",
+  });
   const [seatClasses, setSeatClasses] = useState([
     "First Class",
     "Business",
     "Economy",
   ]);
+
   const [departureDate, setDepartureDate] = useState("");
   const [returnDate, setReturnDate] = useState("");
   const [userQuery, setUserQuery] = useState();
@@ -94,19 +106,25 @@ function FlightModal() {
       setReturnSelected(true);
       setOneWaySelected(false);
       const sectionDiv = document.getElementById("cardbody");
-      sectionDiv.style.backgroundColor = "rgb(90,151,290)";
-      console.log(sectionDiv);
+      const butt = document.getElementById("butt");
+      butt.style.border = "solid 2px rgb(90,151,290)";
+      butt.style.backgroundColor = "rgb(90,151,290)";
+      butt.style.color = "white";
+      sectionDiv.style.border = "solid 2px rgb(90,151,290)";
       /*************** update backend /***************/
     } else if (e.target.id === "oneWay") {
       /*************** update Frontend /***************/
       setReturnSelected(false);
       setOneWaySelected(true);
       const sectionDiv = document.getElementById("cardbody");
-      sectionDiv.style.backgroundColor = "rgb(235,126,40)";
+      const butt = document.getElementById("butt");
+      butt.style.border = "solid 2px rgb(235,126,40)";
+      butt.style.backgroundColor = "rgb(235,126,40)";
+      butt.style.color = "white";
+      sectionDiv.style.border = "solid 2px rgb(235,126,40)";
       /*************** update backend /***************/
     }
   }
-
   function handleFromSelect(e) {
     const chosenCity = e.target.innerText;
     const fromSelected = document.getElementById("selectedCity1");
@@ -114,7 +132,6 @@ function FlightModal() {
     fromSelected.innerText = chosenCity;
     h6.innerText = `Departing from ${chosenCity}`;
   }
-
   function handleToSelect(e) {
     console.log(e.target.innerText);
     const chosenCity = e.target.innerText;
@@ -124,10 +141,16 @@ function FlightModal() {
     fromSelected.innerText = chosenCity;
     h62.innerText = `Destination: ${chosenCity}`;
   }
+
+  function handlePassenger(e) {
+    console.log("PASSENGER MANIP");
+    console.log(e);
+  }
   /******************************** CODE ********************************/
   console.log("DEPART ", departureDate, "RETURN ", returnDate);
   return (
     <div className={styles.FlightModal}>
+      {resultsModal ? <></> : <></>}
       <aside>
         {/*************************** TRIP TYP BUTTONS ***************************/}
         {returnSelected ? (
@@ -158,6 +181,7 @@ function FlightModal() {
             One-way
           </Button>
         )}
+        <h3>Book A Flight</h3>
       </aside>
       <Card
         width={"77.5vw"}
@@ -166,6 +190,7 @@ function FlightModal() {
         justifyContent={"center"}
         alignItems={"center"}
         flexDirection={"column"}
+        maxWidth={"2200px"}
       >
         {/*************************** DISPLAY CARD ***************************/}
         <section id="cardbody">
@@ -181,10 +206,12 @@ function FlightModal() {
                 _focus={{ boxShadow: "outline" }}
                 width="120w"
                 height="10vw"
+                maxWidth={"500px"}
+                maxHeight={"11vw"}
               >
                 <div className={styles.sectionCard}>
                   <h2>From</h2>
-                  <h4 id="selectedCity1">Edmonton</h4>
+                  <h4 id="selectedCity1"></h4>
                   <h6 id="h6">Enter Departure City</h6>
                 </div>
               </MenuButton>
@@ -215,6 +242,8 @@ function FlightModal() {
                 _focus={{ boxShadow: "outline" }}
                 width="20vw"
                 height="10vw"
+                maxWidth={"500px"}
+                maxHeight={"11vw"}
               >
                 <div className={styles.sectionCard}>
                   <h2>To</h2>
@@ -247,11 +276,23 @@ function FlightModal() {
                 _hover={{ bg: "gray.400" }}
                 _expanded={{ bg: "blue.400" }}
                 _focus={{ boxShadow: "outline" }}
-                width="120w"
+                width="20w"
                 height="10vw"
+                maxWidth={"500px"}
+                maxHeight={"11vw"}
               >
                 <div className={styles.sectionCard}>
-                  {returnDate ? (
+                  {returnDate === "" && departureDate === "" ? (
+                    <>
+                      <h2 id={styles.line}> _______</h2>
+                      <h4>Date</h4>
+                      <h6>select departure date</h6>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                  {(returnSelected && returnDate !== "") ||
+                  departureDate !== "" ? (
                     <div className={styles.tripDisplay}>
                       <div>
                         <h2>Departure</h2>
@@ -275,11 +316,13 @@ function FlightModal() {
                       </div>
                     </div>
                   ) : (
-                    <>
-                      <h2 id={styles.line}> _______</h2>
-                      <h4>Date</h4>
-                      <h6>select departure date</h6>
-                    </>
+                    <div>
+                      <h4>{departureDate.toString().slice(3, 7)}</h4>
+                      <h4 id={styles.dateNum}>
+                        {departureDate.toString().slice(7, 10)}
+                      </h4>
+                      <h4>{departureDate.toString().slice(0, 3)}</h4>
+                    </div>
                   )}
                 </div>
               </MenuButton>
@@ -305,12 +348,25 @@ function FlightModal() {
                     </aside>
                   </div>
                 ) : (
-                  <DatePicker
-                    selected={departureDate}
-                    onChange={(departureDate) =>
-                      setDepartureDate(departureDate)
-                    }
-                  />
+                  <>
+                    <h2
+                      style={{
+                        fontWeight: "bold",
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "center",
+                        borderBottom: "solid 1px black",
+                      }}
+                    >
+                      Departure
+                    </h2>
+                    <DatePicker
+                      selected={departureDate}
+                      onChange={(departureDate) =>
+                        setDepartureDate(departureDate)
+                      }
+                    />
+                  </>
                 )}
               </MenuList>
             </Menu>
@@ -327,6 +383,8 @@ function FlightModal() {
                 _focus={{ boxShadow: "outline" }}
                 width="20vw"
                 height="10vw"
+                maxWidth={"500px"}
+                maxHeight={"11vw"}
               >
                 <div className={styles.sectionCard}>
                   <h2 id={styles.line}> Passenger</h2>
@@ -334,101 +392,79 @@ function FlightModal() {
                   <h6>select departure date</h6>
                 </div>
               </MenuButton>
-              <MenuList width={"25vw"} height={"40vh"}>
-                <Text marginLeft={"1vw"}>
-                  <span style={{ fontWeight: "bold" }}>
-                    Passenger and cabin class
-                  </span>
-                  <br />
-                  You can add up to nine passengers. <br />
-                  Adult passengers must be at least 16 to accompany a child or
-                  an infant.
-                </Text>
-
-                <MenuItem
-                  display={"flex"}
-                  marginLeft={"1vw"}
-                  height={"8vh"}
-                  width={"21vw"}
-                  borderRadius={"3px"}
-                  justifyContent={"space-around"}
-                  _hover={{ bg: "none" }}
-                >
-                  Adult
-                  <NumberInput
-                    marginLeft={"1vw"}
-                    step={1}
-                    defaultValue={0}
-                    min={0}
-                    max={30}
-                    width={"5vw"}
-                  >
-                    <NumberInputField />
-                    <NumberInputStepper>
-                      <NumberIncrementStepper />
-                      <NumberDecrementStepper />
-                    </NumberInputStepper>
-                  </NumberInput>{" "}
-                  <Button marginTop={"10vh"} height={"7vh"}>
-                    Economy
-                  </Button>
-                </MenuItem>
-                <MenuItem
-                  display={"flex"}
-                  marginLeft={"1vw"}
-                  height={"8vh"}
-                  width={"21vw"}
-                  borderRadius={"3px"}
-                  justifyContent={"space-around"}
-                  _hover={{ bg: "none" }}
-                >
-                  Child
-                  <NumberInput
-                    marginLeft={"1vw"}
-                    step={1}
-                    defaultValue={0}
-                    min={0}
-                    max={30}
-                    width={"5vw"}
-                  >
-                    <NumberInputField />
-                    <NumberInputStepper>
-                      <NumberIncrementStepper />
-                      <NumberDecrementStepper />
-                    </NumberInputStepper>
-                  </NumberInput>{" "}
-                  <Button marginTop={"10vh"} height={"7vh"}>
-                    Business
-                  </Button>
-                </MenuItem>
-                <MenuItem
-                  display={"flex"}
-                  height={"8vh"}
-                  width={"21vw"}
-                  borderRadius={"3px"}
-                  marginLeft={"3vh"}
-                  _hover={{ bg: "none" }}
-                >
-                  Infant
-                  <NumberInput
-                    marginLeft={"2vw"}
-                    step={1}
-                    defaultValue={0}
-                    min={0}
-                    max={30}
-                    width={"5vw"}
-                  >
-                    <NumberInputField />
-                    <NumberInputStepper>
-                      <NumberIncrementStepper />
-                      <NumberDecrementStepper />
-                    </NumberInputStepper>
-                  </NumberInput>
-                </MenuItem>
+              <MenuList width={"25vw"} height={"40vh"} padding={"2px"}>
+                <div className={styles.passengerMenu}>
+                  <div className={styles.textTop}>
+                    <Text>
+                      <span>Passenger and cabin class</span> <br />
+                      You can add up to nine passengers. Adult passengers must
+                      be at least 16 to accompany a child or an infant.
+                    </Text>
+                  </div>
+                  <div className={styles.bottomSection}>
+                    <div className={styles.incrementSide}>
+                      <div className={styles.increments}>
+                        Adults
+                        <NumberInput
+                          size="xs"
+                          maxW={16}
+                          defaultValue={0}
+                          min={0}
+                          max={10}
+                        >
+                          <NumberInputField />
+                          <NumberInputStepper>
+                            <NumberIncrementStepper />
+                            <NumberDecrementStepper />
+                          </NumberInputStepper>
+                        </NumberInput>
+                      </div>
+                      <div className={styles.increments}>
+                        Child
+                        <NumberInput
+                          size="xs"
+                          maxW={16}
+                          defaultValue={0}
+                          min={0}
+                          max={10}
+                        >
+                          <NumberInputField />
+                          <NumberInputStepper>
+                            <NumberIncrementStepper />
+                            <NumberDecrementStepper />
+                          </NumberInputStepper>
+                        </NumberInput>
+                      </div>
+                      <div className={styles.increments}>
+                        Infant
+                        <NumberInput
+                          size="xs"
+                          maxW={16}
+                          defaultValue={0}
+                          min={0}
+                          max={10}
+                        >
+                          <NumberInputField />
+                          <NumberInputStepper>
+                            <NumberIncrementStepper />
+                            <NumberDecrementStepper />
+                          </NumberInputStepper>
+                        </NumberInput>
+                      </div>
+                    </div>
+                    <div className={styles.seatClassSide}>
+                      {seatClasses.map((seatClass) => {
+                        return <Button>{seatClass}</Button>;
+                      })}
+                    </div>
+                  </div>
+                </div>
               </MenuList>
             </Menu>
             {/*************************** SEARCH BUTTON ***************************/}
-            <Button className={styles.search}>Search Flights</Button>
+            <Button id="butt" className={styles.search}>
+              Search Flights
+            </Button>
           </CardBody>
         </section>
       </Card>
