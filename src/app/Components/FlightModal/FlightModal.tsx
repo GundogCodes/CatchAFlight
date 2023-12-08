@@ -237,7 +237,7 @@ function FlightModal() {
                 _hover={{ bg: "gray.400" }}
                 _expanded={{ bg: "blue.400" }}
                 _focus={{ boxShadow: "outline" }}
-                width="120w"
+                width="18vw"
                 height="10vw"
                 maxWidth={"500px"}
                 maxHeight={"11vw"}
@@ -273,7 +273,7 @@ function FlightModal() {
                 _hover={{ bg: "gray.400" }}
                 _expanded={{ bg: "blue.400" }}
                 _focus={{ boxShadow: "outline" }}
-                width="20vw"
+                width="18vw"
                 height="10vw"
                 maxWidth={"500px"}
                 maxHeight={"11vw"}
@@ -309,7 +309,7 @@ function FlightModal() {
                 _hover={{ bg: "gray.400" }}
                 _expanded={{ bg: "blue.400" }}
                 _focus={{ boxShadow: "outline" }}
-                width="20w"
+                width="18vw"
                 height="10vw"
                 maxWidth={"500px"}
                 maxHeight={"11vw"}
@@ -415,7 +415,7 @@ function FlightModal() {
                 _hover={{ bg: "gray.400" }}
                 _expanded={{ bg: "blue.400" }}
                 _focus={{ boxShadow: "outline" }}
-                width="20vw"
+                width="18vw"
                 height="10vw"
                 maxWidth={"500px"}
                 maxHeight={"11vw"}
