@@ -33,21 +33,35 @@ function FlightModal() {
   interface SeatClass {
     className: string;
   }
+  interface FlightSchedules {
+    scheduleId: string;
+    flightId: string;
+    availableFirstClassSeats: number;
+    availableBusinessClassSeats: number;
+    availableEconomyClassSeats: 43;
+    departureDateTime: string;
+    arrivalDateTime: string;
+  }
 
   /******************************** STATES ********************************/
   const [returnSelected, setReturnSelected] = useState(true);
   const [oneWaySelected, setOneWaySelected] = useState(false);
   const [airports, setAirports] = useState<Airport[]>([]);
-  const [seatClasses, setSeatClasses] = useState<SeatClass[]>([]);
-  const [departureDate, setDepartureDate] = useState(new Date());
-  const [returnDate, setReturnDate] = useState(new Date());
+  const [flightSchedules, setFlightSchedules] = useState<FlightSchedules[]>([]);
+  const [seatClasses, setSeatClasses] = useState([
+    "First Class",
+    "Business",
+    "Economy",
+  ]);
+  const [departureDate, setDepartureDate] = useState("");
+  const [returnDate, setReturnDate] = useState("");
   const [userQuery, setUserQuery] = useState();
   /******************************** USE EFFECTS ********************************/
   useEffect(() => {
     const getAirports = async () => {
       try {
         const response = await fetch(
-          "https://irs-api.samesoft.co/airport/list"
+          "https://irs-api-4e39390b0223.herokuapp.com/airport/list"
         );
         const data = await response.json();
         setAirports(data);
@@ -55,37 +69,24 @@ function FlightModal() {
         console.error(error);
       }
     };
-    // const getFlights = async () => {
-    //   try {
-    //     const response = await fetch(
-    //       "https://irs-api.samesoft.co/flight-schedule/search-flights"
-    //     );
-    //     const data = await response.json();
-    //     console.log("FLIGHTS", data);
-    //     setAirports(data);
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    // };
-    const getSeatClasses = async () => {
+    const getFlights = async () => {
       try {
-        const response1 = await fetch(
-          "https://irs-api.samesoft.co/seat-class/list"
+        const response = await fetch(
+          "https://irs-api-4e39390b0223.herokuapp.com/flight-schedule/get-all-flight-schedules"
         );
-        const data = await response1.json();
-
-        setSeatClasses(data);
+        const data = await response.json();
+        setFlightSchedules(data);
       } catch (error) {
         console.error(error);
       }
     };
+    getFlights();
     getAirports();
-    getSeatClasses();
-    //getFlights();
   }, []);
   /******************************** API CALLS ********************************/
-  console.log(airports);
-  console.log(seatClasses);
+  console.log("AIRPORTS", airports);
+  console.log("SEAT CLASSES", seatClasses);
+  console.log("FLIGHT SCHEDULES", flightSchedules);
   /******************************** FUNCTIONS ********************************/
   function setTripType(e) {
     if (e.target.id === "return") {
@@ -109,7 +110,9 @@ function FlightModal() {
   function handleFromSelect(e) {
     const chosenCity = e.target.innerText;
     const fromSelected = document.getElementById("selectedCity1");
+    const h6 = document.getElementById("h6");
     fromSelected.innerText = chosenCity;
+    h6.innerText = `Departing from ${chosenCity}`;
   }
 
   function handleToSelect(e) {
@@ -117,12 +120,16 @@ function FlightModal() {
     const chosenCity = e.target.innerText;
     const fromSelected = document.getElementById("selectedCity2");
     fromSelected.innerText = chosenCity;
+    const h62 = document.getElementById("h62");
+    fromSelected.innerText = chosenCity;
+    h62.innerText = `Destination: ${chosenCity}`;
   }
   /******************************** CODE ********************************/
   console.log("DEPART ", departureDate, "RETURN ", returnDate);
   return (
     <div className={styles.FlightModal}>
       <aside>
+        {/*************************** TRIP TYP BUTTONS ***************************/}
         {returnSelected ? (
           <Button
             onClick={setTripType}
@@ -160,8 +167,10 @@ function FlightModal() {
         alignItems={"center"}
         flexDirection={"column"}
       >
+        {/*************************** DISPLAY CARD ***************************/}
         <section id="cardbody">
           <CardBody>
+            {/*************************** DEPARTURE CARD ***************************/}
             <Menu>
               <MenuButton
                 transition="all 0.2s"
@@ -171,12 +180,12 @@ function FlightModal() {
                 _expanded={{ bg: "blue.400" }}
                 _focus={{ boxShadow: "outline" }}
                 width="120w"
-                height="8vw"
+                height="10vw"
               >
                 <div className={styles.sectionCard}>
                   <h2>From</h2>
                   <h4 id="selectedCity1">Edmonton</h4>
-                  <h6>Enter Departure City</h6>
+                  <h6 id="h6">Enter Departure City</h6>
                 </div>
               </MenuButton>
               <MenuList>
@@ -193,6 +202,7 @@ function FlightModal() {
                 )}
               </MenuList>
             </Menu>
+            {/*************************** DESTINATION CARD ***************************/}
             <Menu>
               <MenuButton
                 px={4}
@@ -204,12 +214,12 @@ function FlightModal() {
                 _expanded={{ bg: "blue.400" }}
                 _focus={{ boxShadow: "outline" }}
                 width="20vw"
-                height="8vw"
+                height="10vw"
               >
                 <div className={styles.sectionCard}>
                   <h2>To</h2>
                   <h4 id="selectedCity2"></h4>
-                  <h6>Enter destination</h6>
+                  <h6 id="h62">Enter destination</h6>
                 </div>
               </MenuButton>
               <MenuList>
@@ -226,6 +236,7 @@ function FlightModal() {
                 )}
               </MenuList>
             </Menu>
+            {/*************************** DATE CARD ***************************/}
             <Menu closeOnSelect={false}>
               <MenuButton
                 px={4}
@@ -237,29 +248,62 @@ function FlightModal() {
                 _expanded={{ bg: "blue.400" }}
                 _focus={{ boxShadow: "outline" }}
                 width="120w"
-                height="8vw"
+                height="10vw"
               >
                 <div className={styles.sectionCard}>
-                  <h2 id={styles.line}> _______</h2>
-                  <h4>Date</h4>
-                  <h6>select departure date</h6>
+                  {returnDate ? (
+                    <div className={styles.tripDisplay}>
+                      <div>
+                        <h2>Departure</h2>
+                        <h4>{departureDate.toString().slice(3, 7)}</h4>
+                        <h4 id={styles.dateNum}>
+                          {departureDate.toString().slice(7, 10)}
+                        </h4>
+                        <h4>{departureDate.toString().slice(0, 3)}</h4>
+                      </div>
+                      <div>
+                        <h2>Return</h2>
+                        <h4 className={styles.returnSec}>
+                          {returnDate.toString().slice(3, 7)}
+                        </h4>
+                        <h4 id={styles.dateNum} className={styles.returnSec}>
+                          {returnDate.toString().slice(7, 10)}
+                        </h4>
+                        <h4 className={styles.returnSec}>
+                          {returnDate.toString().slice(0, 3)}
+                        </h4>
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      <h2 id={styles.line}> _______</h2>
+                      <h4>Date</h4>
+                      <h6>select departure date</h6>
+                    </>
+                  )}
                 </div>
               </MenuButton>
 
               <MenuList>
                 {returnSelected ? (
-                  <>
-                    <DatePicker
-                      selected={departureDate}
-                      onChange={(departureDate) =>
-                        setDepartureDate(departureDate)
-                      }
-                    />
-                    <DatePicker
-                      selected={returnDate}
-                      onChange={(returnDate) => setReturnDate(returnDate)}
-                    />
-                  </>
+                  <div className={styles.datePicker}>
+                    <aside>
+                      <h2>Departure</h2>
+                      <DatePicker
+                        selected={departureDate}
+                        onChange={(departureDate) =>
+                          setDepartureDate(departureDate)
+                        }
+                      />
+                    </aside>
+                    <aside>
+                      <h2>Return</h2>
+                      <DatePicker
+                        selected={returnDate}
+                        onChange={(returnDate) => setReturnDate(returnDate)}
+                      />
+                    </aside>
+                  </div>
                 ) : (
                   <DatePicker
                     selected={departureDate}
@@ -270,6 +314,7 @@ function FlightModal() {
                 )}
               </MenuList>
             </Menu>
+            {/*************************** PASSENGER CARD ***************************/}
             <Menu closeOnSelect={false}>
               <MenuButton
                 px={4}
@@ -281,7 +326,7 @@ function FlightModal() {
                 _expanded={{ bg: "blue.400" }}
                 _focus={{ boxShadow: "outline" }}
                 width="20vw"
-                height="8vw"
+                height="10vw"
               >
                 <div className={styles.sectionCard}>
                   <h2 id={styles.line}> Passenger</h2>
@@ -382,7 +427,8 @@ function FlightModal() {
                 </MenuItem>
               </MenuList>
             </Menu>
-            <Button className={styles.search}>Search</Button>
+            {/*************************** SEARCH BUTTON ***************************/}
+            <Button className={styles.search}>Search Flights</Button>
           </CardBody>
         </section>
       </Card>
