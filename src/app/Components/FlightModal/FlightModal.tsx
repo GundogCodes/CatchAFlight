@@ -66,12 +66,7 @@ function FlightModal() {
   const [flightSchedules, setFlightSchedules] = useState<FlightSchedules[]>([]);
   const [allFlights, setAllFlights] = useState<Flight[]>([]);
   const [resultsModal, setResultsModal] = useState(false);
-  const [passangers, setPassengers] = useState({
-    Adults: 0,
-    Child: 0,
-    Infant: 0,
-    seatClass: "string",
-  });
+  const [seatSelection, setSeatSelection] = useState("Economy");
   const [seatClasses, setSeatClasses] = useState([
     "First Class",
     "Business",
@@ -86,7 +81,7 @@ function FlightModal() {
     const getAirports = async () => {
       try {
         const response = await fetch(
-          "https://irs-api-4e39390b0223.herokuapp.com/airport/get-all-airports"
+          "https://irs-api-4e39390b0223.herokuapp.com/airport/list"
         );
         const data = await response.json();
         setAirports(data);
@@ -174,6 +169,43 @@ function FlightModal() {
   }
   function handleSearch() {
     setResultsModal(true);
+  }
+  function handleSeatClassSelection(e) {
+    const classType = e.target.id;
+    if (classType === "First Class") {
+      setSeatSelection("First Class");
+      const selectedSeatType = document.getElementById("First Class");
+      selectedSeatType.style.backgroundColor = "rgb(90,151,290)";
+      selectedSeatType.style.color = "white";
+      const unselectedSeatType = document.getElementById("Economy");
+      unselectedSeatType.style.backgroundColor = "rgb(238,242,246)";
+      unselectedSeatType.style.color = "black";
+      const unselectedSeatType2 = document.getElementById("Business");
+      unselectedSeatType2.style.backgroundColor = "rgb(238,242,246)";
+      unselectedSeatType2.style.color = "black";
+    } else if (classType === "Business") {
+      setSeatSelection("Business");
+      const selectedSeatType = document.getElementById("Business");
+      selectedSeatType.style.backgroundColor = "rgb(90,151,290)";
+      selectedSeatType.style.color = "white";
+      const unselectedSeatType = document.getElementById("Economy");
+      unselectedSeatType.style.backgroundColor = "rgb(238,242,246)";
+      unselectedSeatType.style.color = "black";
+      const unselectedSeatType2 = document.getElementById("First Class");
+      unselectedSeatType2.style.backgroundColor = "rgb(238,242,246)";
+      unselectedSeatType2.style.color = "black";
+    } else {
+      setSeatSelection("Economy");
+      const selectedSeatType = document.getElementById("Economy");
+      selectedSeatType.style.backgroundColor = "rgb(90,151,290)";
+      selectedSeatType.style.color = "white";
+      const unselectedSeatType = document.getElementById("Business");
+      unselectedSeatType.style.backgroundColor = "rgb(238,242,246)";
+      unselectedSeatType.style.color = "black";
+      const unselectedSeatType2 = document.getElementById("First Class");
+      unselectedSeatType2.style.backgroundColor = "rgb(238,242,246)";
+      unselectedSeatType2.style.color = "black";
+    }
   }
   /******************************** CODE ********************************/
   console.log("DEPART ", departureDate, "RETURN ", returnDate);
@@ -423,7 +455,7 @@ function FlightModal() {
                 <div className={styles.sectionCard}>
                   <h2 id={styles.line}> Passenger</h2>
                   <h4>Passenger</h4>
-                  <h6>Economy</h6>
+                  <h6>{seatSelection}</h6>
                 </div>
               </MenuButton>
               <MenuList width={"25vw"} height={"40vh"} padding={"2px"}>
@@ -488,7 +520,14 @@ function FlightModal() {
                     </div>
                     <div className={styles.seatClassSide}>
                       {seatClasses.map((seatClass) => {
-                        return <Button>{seatClass}</Button>;
+                        return (
+                          <Button
+                            id={`${seatClass}`}
+                            onClick={handleSeatClassSelection}
+                          >
+                            {seatClass}
+                          </Button>
+                        );
                       })}
                     </div>
                   </div>
