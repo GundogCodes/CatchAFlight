@@ -155,7 +155,7 @@ function FlightModal() {
     const fromSelected = document.getElementById("selectedCity1");
     const h6 = document.getElementById("h6");
     fromSelected.innerText = chosenCity;
-    h6.innerText = `Departing from ${chosenCity} Airport`;
+    h6.innerText = `Departing from ${chosenCity}`;
     /*************** update backend /***************/
     for (let airport of airports) {
       if (airport.airportName === chosenCity) {
@@ -171,7 +171,7 @@ function FlightModal() {
     const h62 = document.getElementById("h62");
     fromSelected.innerText = chosenCity;
     /*************** update backend /***************/
-    h62.innerText = `Destination: ${chosenCity} Airport`;
+    h62.innerText = `Destination: ${chosenCity}`;
     for (let airport of airports) {
       if (airport.airportName === chosenCity) {
         setDestinationCity(airport);
@@ -233,12 +233,11 @@ function FlightModal() {
     }
   }
   /******************************** CODE ********************************/
-  //console.log("DEPART ", departureDate, "RETURN ", returnDate);
-  console.log(airports);
   return (
     <div className={styles.FlightModal}>
       {resultsModal ? (
         <ResultsModal
+          airports={airports}
           setResultsModal={setResultsModal}
           departingCity={departingCity}
           setDepartingCity={setDepartingCity}
@@ -278,7 +277,7 @@ function FlightModal() {
             One-way
           </Button>
         )}
-        {returnSelected ? (
+        {/* {returnSelected ? (
           <Button
             onClick={setTripType}
             id="return"
@@ -291,7 +290,7 @@ function FlightModal() {
           <Button onClick={setTripType} id="return">
             Return
           </Button>
-        )}
+        )} */}
         <h3>Book A Flight</h3>
       </aside>
       <Card
@@ -392,7 +391,7 @@ function FlightModal() {
                 maxWidth={"500px"}
                 maxHeight={"11vw"}
               >
-                <div className={styles.sectionCard}>
+                <div id={styles.dateCard} className={styles.sectionCard}>
                   {returnDate === "" && departureDate === "" ? (
                     <>
                       <h2 id={styles.line}> _______</h2>
@@ -500,7 +499,18 @@ function FlightModal() {
               >
                 <div className={styles.sectionCard}>
                   <h2 id={styles.line}> Passenger</h2>
-                  <h4>Passenger</h4>
+                  {adultPassengers > 0 ||
+                  infantPassengers > 0 ||
+                  childPassengers > 0 ? (
+                    <h4>
+                      {parseInt(adultPassengers) +
+                        parseInt(infantPassengers) +
+                        parseInt(childPassengers)}{" "}
+                      Passengers
+                    </h4>
+                  ) : (
+                    <h4>Passenger</h4>
+                  )}
                   <h6>{seatSelection}</h6>
                 </div>
               </MenuButton>

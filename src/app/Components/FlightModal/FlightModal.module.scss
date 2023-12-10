@@ -37,6 +37,17 @@
     display: flex;
     align-items: center;
     border-radius: 6px;
+    #dateCard {
+      h2 {
+        display: flex;
+        justify-content: center;
+      }
+      h4 {
+        display: flex;
+        justify-content: center;
+        margin-top: 1vh;
+      }
+    }
     .sectionCard {
       width: 15vw;
       height: 10vw;
@@ -56,13 +67,14 @@
         display: flex;
         justify-content: flex-start;
         align-items: center;
-        font-size: 25px;
+        font-size: 20px;
       }
       h6 {
         display: flex;
         justify-content: flex-start;
         margin-left: 2px;
         border-bottom: solid 1px black;
+        font-size: 12px;
       }
       .tripDisplay {
         display: flex;
