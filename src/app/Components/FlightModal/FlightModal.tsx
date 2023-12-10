@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styles from "./FlightModal.module.scss";
 import {
   Menu,
@@ -28,6 +28,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import ResultsModal from "../ResultsModal/ResultsModal";
 function FlightModal() {
   /******************************** VARIABLES ********************************/
+  const numOfChild = useRef(null);
+  const numOfAdult = useRef(null);
+  const numOfInfant = useRef(null);
   interface Airport {
     airportCode: string;
     airportId: string;
@@ -72,10 +75,14 @@ function FlightModal() {
     "Business",
     "Economy",
   ]);
+  const [adultPassengers, setAdultPassengers] = useState(0);
+  const [childPassengers, setChildPassengers] = useState(0);
+  const [infantPassengers, setInfantPassengers] = useState(0);
 
   const [departureDate, setDepartureDate] = useState("");
+  const [departingCity, setDepartingCity] = useState({});
+  const [destinationCity, setDestinationCity] = useState({});
   const [returnDate, setReturnDate] = useState("");
-  const [userQuery, setUserQuery] = useState();
   /******************************** USE EFFECTS ********************************/
   useEffect(() => {
     const getAirports = async () => {
@@ -116,10 +123,6 @@ function FlightModal() {
     getFlights();
   }, []);
   /******************************** API CALLS ********************************/
-  console.log("AIRPORTS", airports);
-  console.log("SEAT CLASSES", seatClasses);
-  console.log("FLIGHT SCHEDULES", flightSchedules);
-  console.log("ALL FLIGHTS", allFlights);
   /******************************** FUNCTIONS ********************************/
   function setTripType(e) {
     if (e.target.id === "return") {
@@ -147,28 +150,50 @@ function FlightModal() {
     }
   }
   function handleFromSelect(e) {
+    /*************** update frontend /***************/
     const chosenCity = e.target.innerText;
     const fromSelected = document.getElementById("selectedCity1");
     const h6 = document.getElementById("h6");
     fromSelected.innerText = chosenCity;
     h6.innerText = `Departing from ${chosenCity} Airport`;
+    /*************** update backend /***************/
+    for (let airport of airports) {
+      if (airport.airportName === chosenCity) {
+        setDepartingCity(airport);
+      }
+    }
   }
   function handleToSelect(e) {
-    console.log(e.target.innerText);
+    /*************** update frontend /***************/
     const chosenCity = e.target.innerText;
     const fromSelected = document.getElementById("selectedCity2");
     fromSelected.innerText = chosenCity;
     const h62 = document.getElementById("h62");
     fromSelected.innerText = chosenCity;
+    /*************** update backend /***************/
     h62.innerText = `Destination: ${chosenCity} Airport`;
+    for (let airport of airports) {
+      if (airport.airportName === chosenCity) {
+        setDestinationCity(airport);
+      }
+    }
   }
 
   function handlePassenger(e) {
-    console.log("PASSENGER MANIP");
-    console.log(e);
+    setAdultPassengers(numOfAdult.current.value);
+    setChildPassengers(numOfChild.current.value);
+    setInfantPassengers(numOfInfant.current.value);
   }
   function handleSearch() {
     setResultsModal(true);
+    // console.log("departing city: ", departingCity);
+    // console.log("destination city: ", destinationCity);
+    // console.log("departure date: ", departureDate);
+    // console.log("return date: ", returnDate);
+    // console.log("adult passengers: ", adultPassengers);
+    // console.log("child passengers: ", childPassengers);
+    // console.log("infant passengers: ", infantPassengers);
+    // console.log("seat class: ", seatSelection);
   }
   function handleSeatClassSelection(e) {
     const classType = e.target.id;
@@ -208,11 +233,32 @@ function FlightModal() {
     }
   }
   /******************************** CODE ********************************/
-  console.log("DEPART ", departureDate, "RETURN ", returnDate);
+  //console.log("DEPART ", departureDate, "RETURN ", returnDate);
+  console.log(airports);
   return (
     <div className={styles.FlightModal}>
       {resultsModal ? (
-        <ResultsModal userQuery={userQuery} setResultsModal={setResultsModal} />
+        <ResultsModal
+          setResultsModal={setResultsModal}
+          departingCity={departingCity}
+          setDepartingCity={setDepartingCity}
+          destinationCity={destinationCity}
+          setDestinationCity={setDestinationCity}
+          departureDate={departureDate}
+          setDepartureDate={setDepartureDate}
+          returnDate={returnDate}
+          setReturnDate={setReturnDate}
+          adultPassengers={adultPassengers}
+          setAdultPassengers={setAdultPassengers}
+          childPassengers={childPassengers}
+          setChildPassengers={setChildPassengers}
+          infantPassengers={infantPassengers}
+          setInfantPassengers={setInfantPassengers}
+          seatSelection={seatSelection}
+          setSeatSelection={setSeatSelection}
+          flightSchedules={flightSchedules}
+          allFlights={allFlights}
+        />
       ) : (
         <></>
       )}
@@ -285,7 +331,7 @@ function FlightModal() {
                   airports.map((airport) => {
                     return (
                       <MenuItem onClick={handleFromSelect}>
-                        {airport.airportCode}
+                        {airport.airportName}
                       </MenuItem>
                     );
                   })
@@ -321,7 +367,7 @@ function FlightModal() {
                   airports.map((airport) => {
                     return (
                       <MenuItem onClick={handleToSelect}>
-                        {airport.airportCode}
+                        {airport.airportName}
                       </MenuItem>
                     );
                   })
@@ -478,10 +524,16 @@ function FlightModal() {
                           min={0}
                           max={9}
                         >
-                          <NumberInputField />
+                          <NumberInputField id="Adult" ref={numOfAdult} />
                           <NumberInputStepper>
-                            <NumberIncrementStepper />
-                            <NumberDecrementStepper />
+                            <NumberIncrementStepper
+                              id="Adult"
+                              onClick={handlePassenger}
+                            />
+                            <NumberDecrementStepper
+                              id="Adult"
+                              onClick={handlePassenger}
+                            />
                           </NumberInputStepper>
                         </NumberInput>
                       </div>
@@ -494,10 +546,16 @@ function FlightModal() {
                           min={0}
                           max={9}
                         >
-                          <NumberInputField />
+                          <NumberInputField id="Child" ref={numOfChild} />
                           <NumberInputStepper>
-                            <NumberIncrementStepper />
-                            <NumberDecrementStepper />
+                            <NumberIncrementStepper
+                              id="Child"
+                              onClick={handlePassenger}
+                            />
+                            <NumberDecrementStepper
+                              id="Child"
+                              onClick={handlePassenger}
+                            />
                           </NumberInputStepper>
                         </NumberInput>
                       </div>
@@ -510,10 +568,16 @@ function FlightModal() {
                           min={0}
                           max={9}
                         >
-                          <NumberInputField />
+                          <NumberInputField id="Infant" ref={numOfInfant} />
                           <NumberInputStepper>
-                            <NumberIncrementStepper />
-                            <NumberDecrementStepper />
+                            <NumberIncrementStepper
+                              id="Infant"
+                              onClick={handlePassenger}
+                            />
+                            <NumberDecrementStepper
+                              id="Infant"
+                              onClick={handlePassenger}
+                            />
                           </NumberInputStepper>
                         </NumberInput>
                       </div>
