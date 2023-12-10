@@ -52,7 +52,7 @@ function ResultsModal({
   function findMatchingToAndFromFlights() {
     //One-way trip
     const potFoundFlights = [];
-    const foundyFlights = [];
+    const matchingFlight = [];
     //check all flights from departing city going to destination city
     console.log("departing AirportID", departingCity.airportId);
     console.log("arriving AirportID", destinationCity.airportId);
@@ -67,7 +67,7 @@ function ResultsModal({
     for (let flightSchedule of flightSchedules) {
       for (let flights of potFoundFlights) {
         if (flights.flightId === flightSchedule.flightId) {
-          foundyFlights.push({
+          matchingFlight.push({
             flightNum: flights.flightNumber,
             flightID: flights.flightId,
             flightSchedule: flightSchedule,
@@ -76,18 +76,30 @@ function ResultsModal({
       }
     }
     console.log("POT FF", potFoundFlights);
-    console.log("FOUNDYYYYYYYYYYYUYUYYUYUYUYUYUYu FLIGHTS", foundyFlights);
-    setFoundMatchingFlights(foundyFlights);
+    console.log("FOUNDYYYYYYYYYYYUYUYYUYUYUYUYUYu FLIGHTS", matchingFlight);
+    setFoundMatchingFlights(matchingFlight);
     // if no flights available that day check all dates around selected departing dates
     //check if numOfPassengers selected is available on flight
     //return trip
   }
-  function showLoginOrSignUp() {}
+  function showLoginOrSignUp() {
+    setShowFormModal(true)
+  }
 
   console.log("FOUND FLIGHTS", foundMatchingFlights);
   return (
     <div className={styles.ResultsModal}>
-      {showFormModal ? <></> : <></>}
+      {showFormModal ? 
+      <div className={styles.form}>
+        <p onClick={()=>{setShowFormModal(false)}}><CloseIcon /></p>
+        <h2>Login</h2>
+        <label>Username:</label>
+        <input></input>
+        <label>Password:</label>
+        <input></input>
+        <Button marginTop={'10px'}>Login</Button>
+        <p id={styles.signUpPrompt}>Don't have an account? Sign up here</p>
+      </div> : <></>}
       <div className={styles.modal}>
         <p>
           <CloseIcon onClick={handleOffClick} />

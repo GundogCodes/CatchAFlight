@@ -15,6 +15,54 @@
     0.5
   ); /* Adjust the alpha value for transparency */
   backdrop-filter: blur(10px); /* Adjust the blur radius as needed */
+  .form{
+    animation: fadeInUp 1s;
+    position: absolute;
+    top:30%;
+    left:30vw;
+    background-color: white;
+    width: 40vw;
+    height: 40vw;
+    border-radius: 6px;
+    border:solid 1px rgb(90, 151, 290);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    #signUpPrompt{
+      display: flex;
+      justify-content: center;
+    }
+    #signUpPrompt:hover{
+      cursor: pointer;
+      color:rgb(90, 151, 290);
+    }
+    p{
+      width:100%;
+      justify-self: flex-start;
+      justify-self: center;
+      padding-left: 10px;
+    }
+    h2{
+      justify-self: center;
+      font-size: 20px;
+      color: rgb(90, 151, 290);
+      width: 100%;
+      padding-left:10px;
+      
+    }
+    input{
+      justify-self: center;
+      border:1px solid black;
+      
+    }
+    label{
+      width: 45%;
+      margin:5px;
+      font-weight: bold;
+    }
+
+  }
   .modal {
     border-radius: 6px;
     width: 70vw;
