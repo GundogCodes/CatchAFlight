@@ -31,6 +31,7 @@ function FlightModal() {
   const numOfChild = useRef(null);
   const numOfAdult = useRef(null);
   const numOfInfant = useRef(null);
+  const cardBody = useRef(null)
   interface Airport {
     airportCode: string;
     airportId: string;
@@ -233,6 +234,10 @@ function FlightModal() {
     }
   }
   /******************************** CODE ********************************/
+  // if(window.innerWidth < 900){
+  //   console.log('SMALLL SCREEEn')
+  //   cardBody.current.style.flex ='display'
+  // }
   return (
     <div className={styles.FlightModal}>
       {resultsModal ? (
@@ -262,7 +267,7 @@ function FlightModal() {
         <></>
       )}
       <aside>
-        {/*************************** TRIP TYP BUTTONS ***************************/}
+        {/*************************** TRIP TYPE BUTTONS ***************************/}
         {oneWaySelected ? (
           <Button
             onClick={setTripType}
@@ -294,17 +299,21 @@ function FlightModal() {
         <h3>Book A Flight</h3>
       </aside>
       <Card
-        width={"77.5vw"}
-        height={"35vh"}
-        display={"flex"}
-        justifyContent={"center"}
+        width={"75vw"}
+        height={{base:'80vh', md:'35vh'}}
+        display={{base:'flex', md:'flex'}}
+        justifyContent={{base:'center', md:'center'}}
         alignItems={"center"}
         flexDirection={"column"}
         maxWidth={"2200px"}
       >
         {/*************************** DISPLAY CARD ***************************/}
         <section id="cardbody">
-          <CardBody>
+          <CardBody ref={cardBody}
+          display={{base:'flex', md:'flex'}}
+          height={{base:'60vh', md:'10vh'}}
+          flexDirection={{base:'column', md:'row'}}
+          >
             {/*************************** DEPARTURE CARD ***************************/}
             <Menu>
               <MenuButton
@@ -314,10 +323,9 @@ function FlightModal() {
                 _hover={{ bg: "gray.400" }}
                 _expanded={{ bg: "blue.400" }}
                 _focus={{ boxShadow: "outline" }}
-                width="18vw"
-                height="10vw"
+                width={{base:'60vw', md:'18vw'}}
+                height={{base:'15vh', md:'10vw'}}
                 maxWidth={"500px"}
-                maxHeight={"11vw"}
               >
                 <div className={styles.sectionCard}>
                   <h2>From</h2>
@@ -350,10 +358,10 @@ function FlightModal() {
                 _hover={{ bg: "gray.400" }}
                 _expanded={{ bg: "blue.400" }}
                 _focus={{ boxShadow: "outline" }}
-                width="18vw"
-                height="10vw"
+                width={{base:'60vw', md:'18vw'}}
+                height={{base:'15vh', md:'10vw'}}
                 maxWidth={"500px"}
-                maxHeight={"11vw"}
+             
               >
                 <div className={styles.sectionCard}>
                   <h2>To</h2>
@@ -386,10 +394,10 @@ function FlightModal() {
                 _hover={{ bg: "gray.400" }}
                 _expanded={{ bg: "blue.400" }}
                 _focus={{ boxShadow: "outline" }}
-                width="18vw"
-                height="10vw"
+                width={{base:'60vw', md:'18vw'}}
+                height={{base:'15vh', md:'10vw'}}
                 maxWidth={"500px"}
-                maxHeight={"11vw"}
+             
               >
                 <div id={styles.dateCard} className={styles.sectionCard}>
                   {returnDate === "" && departureDate === "" ? (
@@ -492,10 +500,10 @@ function FlightModal() {
                 _hover={{ bg: "gray.400" }}
                 _expanded={{ bg: "blue.400" }}
                 _focus={{ boxShadow: "outline" }}
-                width="18vw"
-                height="10vw"
+                width={{base:'60vw', md:'18vw'}}
+                height={{base:'15vh', md:'10vw'}}
                 maxWidth={"500px"}
-                maxHeight={"11vw"}
+          
               >
                 <div className={styles.sectionCard}>
                   <h2 id={styles.line}> Passenger</h2>
@@ -609,10 +617,16 @@ function FlightModal() {
               </MenuList>
             </Menu>
             {/*************************** SEARCH BUTTON ***************************/}
-            <Button id="butt" onClick={handleSearch} className={styles.search}>
+          </CardBody>
+            <Button
+            id="butt"
+            onClick={handleSearch}
+            className={styles.search}
+  
+            justifySelf={'flex-end'}
+            >
               Search Flights
             </Button>
-          </CardBody>
         </section>
       </Card>
     </div>
