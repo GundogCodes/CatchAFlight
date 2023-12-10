@@ -46,6 +46,7 @@ function Frontpage() {
 
   return (
     <div className={styles.FrontPage}>
+    <h1>HELLO</h1>
       <div className={styles.top}>
         <h1>FLIGHT CLUB</h1>
         <nav>
