@@ -35,7 +35,7 @@
     width: 100%;
     height: 40vh;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     border-radius: 6px;
     #dateCard {
       h2 {
@@ -187,39 +187,38 @@
   }
 }
 
-
-@media (max-width:900px) {
+@media (max-width: 900px) {
   .FlightModal {
     aside {
-      
       h3 {
-        
       }
     }
     section {
-      
       display: flex;
       flex-direction: column;
       height: 100vh;
+      justify-content: space-evenly;
       #dateCard {
         h2 {
-          
         }
         h4 {
-          
         }
       }
       .sectionCard {
         width: 50vw;
         height: 100%;
-      
       }
     }
-    .search{
-      background-color: orange;
-      width: 25vw;
-      margin:20px;
-      height:10vw;
+    .buttonDiv {
+      width: 75vw;
+      display: flex;
+      justify-content: center;
+      .search {
+        background-color: orange;
+        width: 25vw;
+        margin: 20px;
+        height: 15vw;
+      }
     }
-    }
+  }
 }

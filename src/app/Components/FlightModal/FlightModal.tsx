@@ -31,7 +31,7 @@ function FlightModal() {
   const numOfChild = useRef(null);
   const numOfAdult = useRef(null);
   const numOfInfant = useRef(null);
-  const cardBody = useRef(null)
+  const cardBody = useRef(null);
   interface Airport {
     airportCode: string;
     airportId: string;
@@ -300,19 +300,21 @@ function FlightModal() {
       </aside>
       <Card
         width={"75vw"}
-        height={{base:'80vh', md:'35vh'}}
-        display={{base:'flex', md:'flex'}}
-        justifyContent={{base:'center', md:'center'}}
+        height={{ base: "80vh", md: "35vh" }}
+        display={{ base: "flex", md: "flex" }}
+        justifyContent={{ base: "center", md: "center" }}
         alignItems={"center"}
         flexDirection={"column"}
         maxWidth={"2200px"}
       >
         {/*************************** DISPLAY CARD ***************************/}
         <section id="cardbody">
-          <CardBody ref={cardBody}
-          display={{base:'flex', md:'flex'}}
-          height={{base:'60vh', md:'10vh'}}
-          flexDirection={{base:'column', md:'row'}}
+          <CardBody
+            ref={cardBody}
+            display={{ base: "flex", md: "flex" }}
+            height={{ base: "60vh", md: "10vh" }}
+            flexDirection={{ base: "column", md: "row" }}
+            justifyContent={{ base: "center", md: "center" }}
           >
             {/*************************** DEPARTURE CARD ***************************/}
             <Menu>
@@ -323,9 +325,10 @@ function FlightModal() {
                 _hover={{ bg: "gray.400" }}
                 _expanded={{ bg: "blue.400" }}
                 _focus={{ boxShadow: "outline" }}
-                width={{base:'60vw', md:'18vw'}}
-                height={{base:'15vh', md:'10vw'}}
+                width={{ base: "60vw", md: "18vw" }}
+                height={{ base: "16vh", md: "10vw" }}
                 maxWidth={"500px"}
+                margin={"12px"}
               >
                 <div className={styles.sectionCard}>
                   <h2>From</h2>
@@ -358,10 +361,10 @@ function FlightModal() {
                 _hover={{ bg: "gray.400" }}
                 _expanded={{ bg: "blue.400" }}
                 _focus={{ boxShadow: "outline" }}
-                width={{base:'60vw', md:'18vw'}}
-                height={{base:'15vh', md:'10vw'}}
+                width={{ base: "60vw", md: "18vw" }}
+                height={{ base: "16vh", md: "10vw" }}
                 maxWidth={"500px"}
-             
+                margin={"12px"}
               >
                 <div className={styles.sectionCard}>
                   <h2>To</h2>
@@ -394,10 +397,10 @@ function FlightModal() {
                 _hover={{ bg: "gray.400" }}
                 _expanded={{ bg: "blue.400" }}
                 _focus={{ boxShadow: "outline" }}
-                width={{base:'60vw', md:'18vw'}}
-                height={{base:'15vh', md:'10vw'}}
+                width={{ base: "60vw", md: "18vw" }}
+                height={{ base: "16vh", md: "10vw" }}
                 maxWidth={"500px"}
-             
+                margin={"12px"}
               >
                 <div id={styles.dateCard} className={styles.sectionCard}>
                   {returnDate === "" && departureDate === "" ? (
@@ -500,10 +503,10 @@ function FlightModal() {
                 _hover={{ bg: "gray.400" }}
                 _expanded={{ bg: "blue.400" }}
                 _focus={{ boxShadow: "outline" }}
-                width={{base:'60vw', md:'18vw'}}
-                height={{base:'15vh', md:'10vw'}}
+                width={{ base: "60vw", md: "18vw" }}
+                height={{ base: "16vh", md: "10vw" }}
                 maxWidth={"500px"}
-          
+                margin={"12px"}
               >
                 <div className={styles.sectionCard}>
                   <h2 id={styles.line}> Passenger</h2>
@@ -618,17 +621,18 @@ function FlightModal() {
             </Menu>
             {/*************************** SEARCH BUTTON ***************************/}
           </CardBody>
-            <Button
-            id="butt"
-            onClick={handleSearch}
-            className={styles.search}
-  
-            justifySelf={'flex-end'}
-            >
-              Search Flights
-            </Button>
         </section>
       </Card>
+      <div className={styles.buttonDiv}>
+        <Button
+          id="butt"
+          onClick={handleSearch}
+          className={styles.search}
+          justifySelf={"flex-end"}
+        >
+          Search Flights
+        </Button>
+      </div>
     </div>
   );
 }
