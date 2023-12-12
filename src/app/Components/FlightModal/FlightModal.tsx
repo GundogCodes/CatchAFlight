@@ -125,7 +125,7 @@ function FlightModal() {
   }, []);
   /******************************** API CALLS ********************************/
   /******************************** FUNCTIONS ********************************/
-  function setTripType(e) {
+  function setTripType(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.id === "return") {
       /*************** update Frontend /***************/
       setReturnSelected(true);
@@ -180,7 +180,7 @@ function FlightModal() {
     }
   }
 
-  function handlePassenger(e) {
+  function handlePassenger(e: React.ChangeEvent<HTMLInputElement>) {
     setAdultPassengers(numOfAdult.current.value);
     setChildPassengers(numOfChild.current.value);
     setInfantPassengers(numOfInfant.current.value);
@@ -196,7 +196,7 @@ function FlightModal() {
     // console.log("infant passengers: ", infantPassengers);
     // console.log("seat class: ", seatSelection);
   }
-  function handleSeatClassSelection(e) {
+  function handleSeatClassSelection(e: React.ChangeEvent<HTMLInputElement>) {
     const classType = e.target.id;
     if (classType === "First Class") {
       setSeatSelection("First Class");
