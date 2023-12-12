@@ -340,7 +340,10 @@ function FlightModal() {
                 {airports ? (
                   airports.map((airport) => {
                     return (
-                      <MenuItem onClick={handleFromSelect}>
+                      <MenuItem
+                        key={airport.airportId}
+                        onClick={handleFromSelect}
+                      >
                         {airport.airportName}
                       </MenuItem>
                     );
@@ -376,7 +379,10 @@ function FlightModal() {
                 {airports ? (
                   airports.map((airport) => {
                     return (
-                      <MenuItem onClick={handleToSelect}>
+                      <MenuItem
+                        key={airport.airportId}
+                        onClick={handleToSelect}
+                      >
                         {airport.airportName}
                       </MenuItem>
                     );
@@ -607,6 +613,7 @@ function FlightModal() {
                       {seatClasses.map((seatClass) => {
                         return (
                           <Button
+                            key={seatClass}
                             id={`${seatClass}`}
                             onClick={handleSeatClassSelection}
                           >
