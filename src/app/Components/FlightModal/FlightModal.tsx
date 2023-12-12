@@ -61,6 +61,7 @@ function FlightModal() {
     totalBusinessClassSeats: number;
     totalEconomyClassSeats: number;
     totalFirstClassSeats: number;
+    flightSchedule: FlightSchedules; // Assuming flightSchedule is a single object
   }
 
   /******************************** STATES ********************************/
