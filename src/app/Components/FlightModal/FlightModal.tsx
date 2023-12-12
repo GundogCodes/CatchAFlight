@@ -64,26 +64,26 @@ function FlightModal() {
   }
 
   /******************************** STATES ********************************/
-  const [returnSelected, setReturnSelected] = useState(false);
-  const [oneWaySelected, setOneWaySelected] = useState(true);
+  const [returnSelected, setReturnSelected] = useState<boolean>(false);
+  const [oneWaySelected, setOneWaySelected] = useState<boolean>(true);
   const [airports, setAirports] = useState<Airport[]>([]);
   const [flightSchedules, setFlightSchedules] = useState<FlightSchedules[]>([]);
   const [allFlights, setAllFlights] = useState<Flight[]>([]);
-  const [resultsModal, setResultsModal] = useState(false);
-  const [seatSelection, setSeatSelection] = useState("Economy");
-  const [seatClasses, setSeatClasses] = useState([
+  const [resultsModal, setResultsModal] = useState<boolean>(false);
+  const [seatSelection, setSeatSelection] = useState<string>("Economy");
+  const [seatClasses, setSeatClasses] = useState<string[]>([
     "First Class",
     "Business",
     "Economy",
   ]);
-  const [adultPassengers, setAdultPassengers] = useState(0);
-  const [childPassengers, setChildPassengers] = useState(0);
-  const [infantPassengers, setInfantPassengers] = useState(0);
+  const [adultPassengers, setAdultPassengers] = useState<number>(0);
+  const [childPassengers, setChildPassengers] = useState<number>(0);
+  const [infantPassengers, setInfantPassengers] = useState<number>(0);
 
-  const [departureDate, setDepartureDate] = useState("");
-  const [departingCity, setDepartingCity] = useState({});
-  const [destinationCity, setDestinationCity] = useState({});
-  const [returnDate, setReturnDate] = useState("");
+  const [departureDate, setDepartureDate] = useState<string>("");
+  const [departingCity, setDepartingCity] = useState<Airport[]>([]);
+  const [destinationCity, setDestinationCity] = useState<Airport[]>([]);
+  const [returnDate, setReturnDate] = useState<string>("");
   /******************************** USE EFFECTS ********************************/
   useEffect(() => {
     const getAirports = async () => {
@@ -130,33 +130,51 @@ function FlightModal() {
       /*************** update Frontend /***************/
       setReturnSelected(true);
       setOneWaySelected(false);
-      const sectionDiv = document.getElementById("cardbody");
-      const butt = document.getElementById("butt");
-      butt.style.border = "solid 2px rgb(90,151,290)";
-      butt.style.backgroundColor = "rgb(90,151,290)";
-      butt.style.color = "white";
-      sectionDiv.style.border = "solid 2px rgb(90,151,290)";
+      const sectionDiv = document.getElementById(
+        "cardbody"
+      ) as HTMLDivElement | null;
+      const butt = document.getElementById("butt") as HTMLButtonElement | null;
+
+      if (butt && sectionDiv) {
+        butt.style.border = "solid 2px rgb(90,151,290)";
+        butt.style.backgroundColor = "rgb(90,151,290)";
+        butt.style.color = "white";
+        sectionDiv.style.border = "solid 2px rgb(90,151,290)";
+      }
+
       /*************** update backend /***************/
     } else if (e.target.id === "oneWay") {
       /*************** update Frontend /***************/
       setReturnSelected(false);
       setOneWaySelected(true);
-      const sectionDiv = document.getElementById("cardbody");
-      const butt = document.getElementById("butt");
-      butt.style.border = "solid 2px rgb(235,126,40)";
-      butt.style.backgroundColor = "rgb(235,126,40)";
-      butt.style.color = "white";
-      sectionDiv.style.border = "solid 2px rgb(235,126,40)";
+      const sectionDiv = document.getElementById(
+        "cardbody"
+      ) as HTMLDivElement | null;
+      const butt = document.getElementById("butt") as HTMLButtonElement | null;
+
+      if (butt && sectionDiv) {
+        butt.style.border = "solid 2px rgb(90,151,290)";
+        butt.style.backgroundColor = "rgb(90,151,290)";
+        butt.style.color = "white";
+        sectionDiv.style.border = "solid 2px rgb(90,151,290)";
+      }
+
       /*************** update backend /***************/
     }
   }
-  function handleFromSelect(e) {
+  function handleFromSelect(e: React.ChangeEvent<HTMLInputElement>) {
     /*************** update frontend /***************/
     const chosenCity = e.target.innerText;
-    const fromSelected = document.getElementById("selectedCity1");
-    const h6 = document.getElementById("h6");
-    fromSelected.innerText = chosenCity;
-    h6.innerText = `Departing from ${chosenCity}`;
+    const fromSelected = document.getElementById(
+      "selectedCity1"
+    ) as HTMLDivElement | null;
+    const h6 = document.getElementById("h6") as HTMLHeadingElement | null;
+
+    if (fromSelected && h6) {
+      fromSelected.innerText = chosenCity;
+      h6.innerText = `Departing from ${chosenCity}`;
+    }
+
     /*************** update backend /***************/
     for (let airport of airports) {
       if (airport.airportName === chosenCity) {
@@ -164,15 +182,21 @@ function FlightModal() {
       }
     }
   }
-  function handleToSelect(e) {
+
+  function handleToSelect(e: React.ChangeEvent<HTMLInputElement>) {
     /*************** update frontend /***************/
     const chosenCity = e.target.innerText;
-    const fromSelected = document.getElementById("selectedCity2");
-    fromSelected.innerText = chosenCity;
-    const h62 = document.getElementById("h62");
-    fromSelected.innerText = chosenCity;
-    /*************** update backend /***************/
-    h62.innerText = `Destination: ${chosenCity}`;
+    const fromSelected = document.getElementById(
+      "selectedCity2"
+    ) as HTMLDivElement | null;
+    const h62 = document.getElementById("h62") as HTMLHeadingElement | null;
+
+    if (fromSelected && h62) {
+      fromSelected.innerText = chosenCity;
+      /*************** update backend /***************/
+      h62.innerText = `Destination: ${chosenCity}`;
+    }
+
     for (let airport of airports) {
       if (airport.airportName === chosenCity) {
         setDestinationCity(airport);
@@ -181,9 +205,13 @@ function FlightModal() {
   }
 
   function handlePassenger(e: React.ChangeEvent<HTMLInputElement>) {
-    setAdultPassengers(numOfAdult.current.value);
-    setChildPassengers(numOfChild.current.value);
-    setInfantPassengers(numOfInfant.current.value);
+    const adultValue = numOfAdult.current?.value || 0;
+    const childValue = numOfChild.current?.value || 0;
+    const infantValue = numOfInfant.current?.value || 0;
+
+    setAdultPassengers(adultValue);
+    setChildPassengers(childValue);
+    setInfantPassengers(infantValue);
   }
   function handleSearch() {
     setResultsModal(true);
@@ -198,41 +226,24 @@ function FlightModal() {
   }
   function handleSeatClassSelection(e: React.ChangeEvent<HTMLInputElement>) {
     const classType = e.target.id;
-    if (classType === "First Class") {
-      setSeatSelection("First Class");
-      const selectedSeatType = document.getElementById("First Class");
-      selectedSeatType.style.backgroundColor = "rgb(90,151,290)";
-      selectedSeatType.style.color = "white";
-      const unselectedSeatType = document.getElementById("Economy");
-      unselectedSeatType.style.backgroundColor = "rgb(238,242,246)";
-      unselectedSeatType.style.color = "black";
-      const unselectedSeatType2 = document.getElementById("Business");
-      unselectedSeatType2.style.backgroundColor = "rgb(238,242,246)";
-      unselectedSeatType2.style.color = "black";
-    } else if (classType === "Business") {
-      setSeatSelection("Business");
-      const selectedSeatType = document.getElementById("Business");
-      selectedSeatType.style.backgroundColor = "rgb(90,151,290)";
-      selectedSeatType.style.color = "white";
-      const unselectedSeatType = document.getElementById("Economy");
-      unselectedSeatType.style.backgroundColor = "rgb(238,242,246)";
-      unselectedSeatType.style.color = "black";
-      const unselectedSeatType2 = document.getElementById("First Class");
-      unselectedSeatType2.style.backgroundColor = "rgb(238,242,246)";
-      unselectedSeatType2.style.color = "black";
-    } else {
-      setSeatSelection("Economy");
-      const selectedSeatType = document.getElementById("Economy");
-      selectedSeatType.style.backgroundColor = "rgb(90,151,290)";
-      selectedSeatType.style.color = "white";
-      const unselectedSeatType = document.getElementById("Business");
-      unselectedSeatType.style.backgroundColor = "rgb(238,242,246)";
-      unselectedSeatType.style.color = "black";
-      const unselectedSeatType2 = document.getElementById("First Class");
-      unselectedSeatType2.style.backgroundColor = "rgb(238,242,246)";
-      unselectedSeatType2.style.color = "black";
-    }
+    const seatTypes = ["First Class", "Business", "Economy"];
+
+    setSeatSelection(classType);
+
+    seatTypes.forEach((type) => {
+      const element = document.getElementById(type);
+      if (element) {
+        if (type === classType) {
+          element.style.backgroundColor = "rgb(90,151,290)";
+          element.style.color = "white";
+        } else {
+          element.style.backgroundColor = "rgb(238,242,246)";
+          element.style.color = "black";
+        }
+      }
+    });
   }
+
   /******************************** CODE ********************************/
   // if(window.innerWidth < 900){
   //   console.log('SMALLL SCREEEn')
@@ -270,7 +281,7 @@ function FlightModal() {
         {/*************************** TRIP TYPE BUTTONS ***************************/}
         {oneWaySelected ? (
           <Button
-            onClick={setTripType}
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) => setTripType(e)}
             id="oneWay"
             backgroundColor={"rgb(235,126,40)"}
             color={"white"}
@@ -278,7 +289,10 @@ function FlightModal() {
             <Text>One-way</Text>
           </Button>
         ) : (
-          <Button onClick={setTripType} id="oneWay">
+          <Button
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) => setTripType(e)}
+            id="oneWay"
+          >
             <Text>One-way</Text>
           </Button>
         )}
@@ -348,7 +362,9 @@ function FlightModal() {
                     return (
                       <MenuItem
                         key={airport.airportId}
-                        onClick={handleFromSelect}
+                        onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+                          handleFromSelect
+                        }
                       >
                         {airport.city}
                       </MenuItem>
@@ -389,7 +405,9 @@ function FlightModal() {
                     return (
                       <MenuItem
                         key={airport.airportId}
-                        onClick={handleToSelect}
+                        onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+                          handleToSelect
+                        }
                       >
                         {airport.city}
                       </MenuItem>
@@ -478,8 +496,8 @@ function FlightModal() {
                       </h2>
                       <DatePicker
                         selected={departureDate}
-                        onChange={(departureDate) =>
-                          setDepartureDate(departureDate)
+                        onChange={(newDate: Date | null) =>
+                          setDepartureDate(newDate)
                         }
                       />
                     </aside>
@@ -488,8 +506,10 @@ function FlightModal() {
                         <Text>Return</Text>
                       </h2>
                       <DatePicker
-                        selected={returnDate}
-                        onChange={(returnDate) => setReturnDate(returnDate)}
+                        selected={departureDate}
+                        onChange={(newDate: Date | null) =>
+                          setDepartureDate(newDate)
+                        }
                       />
                     </aside>
                   </div>
@@ -508,8 +528,8 @@ function FlightModal() {
                     </h2>
                     <DatePicker
                       selected={departureDate}
-                      onChange={(departureDate) =>
-                        setDepartureDate(departureDate)
+                      onChange={(newDate: Date | null) =>
+                        setDepartureDate(newDate)
                       }
                     />
                   </>
@@ -633,7 +653,7 @@ function FlightModal() {
                           <Button
                             key={seatClass}
                             id={`${seatClass}`}
-                            onClick={handleSeatClassSelection}
+                            onClick={(e) => handleSeatClassSelection(e)}
                           >
                             {seatClass}
                           </Button>
