@@ -545,9 +545,11 @@ function FlightModal() {
                   infantPassengers > 0 ||
                   childPassengers > 0 ? (
                     <h4>
-                      {parseInt(adultPassengers) +
-                        parseInt(infantPassengers) +
-                        parseInt(childPassengers)}
+                      {String(
+                        parseInt(adultPassengers.toString()) +
+                          parseInt(infantPassengers.toString()) +
+                          parseInt(childPassengers.toString())
+                      )}
                       Passengers
                     </h4>
                   ) : (
