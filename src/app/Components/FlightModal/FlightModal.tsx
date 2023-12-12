@@ -80,10 +80,11 @@ function FlightModal() {
   const [childPassengers, setChildPassengers] = useState<number>(0);
   const [infantPassengers, setInfantPassengers] = useState<number>(0);
 
-  const [departureDate, setDepartureDate] = useState<string>("");
+  const [departureDate, setDepartureDate] = useState<Date | null>(null);
+
   const [departingCity, setDepartingCity] = useState<Airport | null>(null);
   const [destinationCity, setDestinationCity] = useState<Airport | null>(null);
-  const [returnDate, setReturnDate] = useState<string>("");
+  const [returnDate, setReturnDate] = useState<Date | null>(null);
   /******************************** USE EFFECTS ********************************/
   useEffect(() => {
     const getAirports = async () => {
@@ -440,7 +441,7 @@ function FlightModal() {
                 margin={"12px"}
               >
                 <div id={styles.dateCard} className={styles.sectionCard}>
-                  {returnDate === "" && departureDate === "" ? (
+                  {returnDate === null && departureDate === null ? (
                     <>
                       <h2 id={styles.line}> _______</h2>
                       <h4>
@@ -450,44 +451,25 @@ function FlightModal() {
                   ) : (
                     <></>
                   )}
-                  {returnSelected && returnDate ? (
-                    <div className={styles.tripDisplay}>
-                      <div>
-                        <h2>
-                          <Text>Departure</Text>
-                        </h2>
-                        <h4>{departureDate.toString().slice(3, 7)}</h4>
-                        <h4 id={styles.dateNum}>
-                          {departureDate.toString().slice(7, 10)}
-                        </h4>
-                        <h4>{departureDate.toString().slice(0, 3)}</h4>
-                      </div>
-                      <div>
-                        <h2>
-                          <Text>Return</Text>
-                        </h2>
-                        <h4 className={styles.returnSec}>
-                          {returnDate.toString().slice(3, 7)}
-                        </h4>
-                        <h4 id={styles.dateNum} className={styles.returnSec}>
-                          {returnDate.toString().slice(7, 10)}
-                        </h4>
-                        <h4 className={styles.returnSec}>
-                          {returnDate.toString().slice(0, 3)}
-                        </h4>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className={styles.oneWayTrip}>
-                      <h2 style={{ borderBottom: "solid 1px black" }}>
-                        <Text> Departing Date</Text>
-                      </h2>
-                      <h4>{departureDate.toString().slice(3, 7)}</h4>
-                      <h4 id={styles.dateNum}>
-                        {departureDate.toString().slice(7, 10)}
-                      </h4>
-                      <h4>{departureDate.toString().slice(0, 3)}</h4>
-                    </div>
+                  {departureDate !== null && (
+                    <>
+                      {returnSelected !== null && returnDate !== null ? (
+                        <div className={styles.tripDisplay}>
+                          {/* ... rest of the code */}
+                        </div>
+                      ) : (
+                        <div className={styles.oneWayTrip}>
+                          <h2 style={{ borderBottom: "solid 1px black" }}>
+                            <Text> Departing Date</Text>
+                          </h2>
+                          <h4>{departureDate.toString().slice(3, 7)}</h4>
+                          <h4 id={styles.dateNum}>
+                            {departureDate.toString().slice(7, 10)}
+                          </h4>
+                          <h4>{departureDate.toString().slice(0, 3)}</h4>
+                        </div>
+                      )}
+                    </>
                   )}
                 </div>
               </MenuButton>
