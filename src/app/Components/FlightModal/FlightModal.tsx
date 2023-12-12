@@ -322,8 +322,8 @@ function FlightModal() {
         </h3>
       </aside>
       <Card
-        width={"80vw"}
         height={{ base: "80vh", md: "35vh" }}
+        width={{ base: "75vw", md: "79.5vw" }}
         display={{ base: "flex", md: "flex" }}
         justifyContent={{ base: "center", md: "center" }}
         alignItems={"center"}
@@ -351,7 +351,7 @@ function FlightModal() {
                 width={{ base: "60vw", md: "18vw" }}
                 height={{ base: "16vh", md: "10vw" }}
                 maxWidth={"500px"}
-                margin={"12px"}
+                marginTop={"2vh"}
               >
                 <div className={styles.sectionCard}>
                   <h2>
@@ -363,7 +363,7 @@ function FlightModal() {
                   </h6>
                 </div>
               </MenuButton>
-              <MenuList>
+              <MenuList width={{ base: "60vw", md: "18vw" }}>
                 {airports ? (
                   airports.map((airport) => {
                     return (
@@ -396,7 +396,7 @@ function FlightModal() {
                 width={{ base: "60vw", md: "18vw" }}
                 height={{ base: "16vh", md: "10vw" }}
                 maxWidth={"500px"}
-                margin={"12px"}
+                marginTop={"2vh"}
               >
                 <div className={styles.sectionCard}>
                   <h2>To</h2>
@@ -406,7 +406,7 @@ function FlightModal() {
                   </h6>
                 </div>
               </MenuButton>
-              <MenuList>
+              <MenuList width={{ base: "60vw", md: "18vw" }}>
                 {airports ? (
                   airports.map((airport) => {
                     return (
@@ -439,7 +439,7 @@ function FlightModal() {
                 width={{ base: "60vw", md: "18vw" }}
                 height={{ base: "16vh", md: "10vw" }}
                 maxWidth={"500px"}
-                margin={"12px"}
+                marginTop={"2vh"}
               >
                 <div id={styles.dateCard} className={styles.sectionCard}>
                   {returnDate === null && departureDate === null ? (
@@ -473,7 +473,7 @@ function FlightModal() {
                 </div>
               </MenuButton>
 
-              <MenuList>
+              <MenuList width={{ base: "60vw", md: "18vw" }}>
                 {returnSelected ? (
                   <div className={styles.datePicker}>
                     <aside>
@@ -536,7 +536,7 @@ function FlightModal() {
                 width={{ base: "60vw", md: "18vw" }}
                 height={{ base: "16vh", md: "10vw" }}
                 maxWidth={"500px"}
-                margin={"12px"}
+                marginTop={"2vh"}
               >
                 <div className={styles.sectionCard}>
                   <h2 id={styles.line}> Passenger</h2>
@@ -557,7 +557,11 @@ function FlightModal() {
                   <h6>{seatSelection}</h6>
                 </div>
               </MenuButton>
-              <MenuList width={"25vw"} height={"40vh"} padding={"2px"}>
+              <MenuList
+                width={{ base: "60vw", md: "25vw" }}
+                height={"40vh"}
+                padding={"2px"}
+              >
                 <div className={styles.passengerMenu}>
                   <div className={styles.textTop}>
                     <Text>
