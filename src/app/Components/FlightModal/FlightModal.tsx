@@ -275,11 +275,11 @@ function FlightModal() {
             backgroundColor={"rgb(235,126,40)"}
             color={"white"}
           >
-            One-way
+            <Text>One-way</Text>
           </Button>
         ) : (
           <Button onClick={setTripType} id="oneWay">
-            One-way
+            <Text>One-way</Text>
           </Button>
         )}
         {/* {returnSelected ? (
@@ -296,10 +296,12 @@ function FlightModal() {
             Return
           </Button>
         )} */}
-        <h3>Book A Flight</h3>
+        <h3>
+          <Text>Book A Flight</Text>
+        </h3>
       </aside>
       <Card
-        width={"75vw"}
+        width={"80vw"}
         height={{ base: "80vh", md: "35vh" }}
         display={{ base: "flex", md: "flex" }}
         justifyContent={{ base: "center", md: "center" }}
@@ -331,9 +333,13 @@ function FlightModal() {
                 margin={"12px"}
               >
                 <div className={styles.sectionCard}>
-                  <h2>From</h2>
+                  <h2>
+                    <Text>From</Text>
+                  </h2>
                   <h4 id="selectedCity1"></h4>
-                  <h6 id="h6">Enter Departure City</h6>
+                  <h6 id="h6">
+                    <Text>Enter Departure City</Text>
+                  </h6>
                 </div>
               </MenuButton>
               <MenuList>
@@ -344,7 +350,7 @@ function FlightModal() {
                         key={airport.airportId}
                         onClick={handleFromSelect}
                       >
-                        {airport.airportName}
+                        {airport.city}
                       </MenuItem>
                     );
                   })
@@ -372,7 +378,9 @@ function FlightModal() {
                 <div className={styles.sectionCard}>
                   <h2>To</h2>
                   <h4 id="selectedCity2"></h4>
-                  <h6 id="h62">Enter destination</h6>
+                  <h6 id="h62">
+                    <Text>Enter destination</Text>
+                  </h6>
                 </div>
               </MenuButton>
               <MenuList>
@@ -383,7 +391,7 @@ function FlightModal() {
                         key={airport.airportId}
                         onClick={handleToSelect}
                       >
-                        {airport.airportName}
+                        {airport.city}
                       </MenuItem>
                     );
                   })
@@ -412,7 +420,9 @@ function FlightModal() {
                   {returnDate === "" && departureDate === "" ? (
                     <>
                       <h2 id={styles.line}> _______</h2>
-                      <h4>Select </h4>
+                      <h4>
+                        <Text>Select</Text>{" "}
+                      </h4>
                     </>
                   ) : (
                     <></>
@@ -420,7 +430,9 @@ function FlightModal() {
                   {returnSelected && returnDate ? (
                     <div className={styles.tripDisplay}>
                       <div>
-                        <h2>Departure</h2>
+                        <h2>
+                          <Text>Departure</Text>
+                        </h2>
                         <h4>{departureDate.toString().slice(3, 7)}</h4>
                         <h4 id={styles.dateNum}>
                           {departureDate.toString().slice(7, 10)}
@@ -428,7 +440,9 @@ function FlightModal() {
                         <h4>{departureDate.toString().slice(0, 3)}</h4>
                       </div>
                       <div>
-                        <h2>Return</h2>
+                        <h2>
+                          <Text>Return</Text>
+                        </h2>
                         <h4 className={styles.returnSec}>
                           {returnDate.toString().slice(3, 7)}
                         </h4>
@@ -443,7 +457,7 @@ function FlightModal() {
                   ) : (
                     <div className={styles.oneWayTrip}>
                       <h2 style={{ borderBottom: "solid 1px black" }}>
-                        Departing Date
+                        <Text> Departing Date</Text>
                       </h2>
                       <h4>{departureDate.toString().slice(3, 7)}</h4>
                       <h4 id={styles.dateNum}>
@@ -459,7 +473,9 @@ function FlightModal() {
                 {returnSelected ? (
                   <div className={styles.datePicker}>
                     <aside>
-                      <h2>Departure</h2>
+                      <h2>
+                        <Text>Departure</Text>
+                      </h2>
                       <DatePicker
                         selected={departureDate}
                         onChange={(departureDate) =>
@@ -468,7 +484,9 @@ function FlightModal() {
                       />
                     </aside>
                     <aside>
-                      <h2>Return</h2>
+                      <h2>
+                        <Text>Return</Text>
+                      </h2>
                       <DatePicker
                         selected={returnDate}
                         onChange={(returnDate) => setReturnDate(returnDate)}
@@ -486,7 +504,7 @@ function FlightModal() {
                         borderBottom: "solid 1px black",
                       }}
                     >
-                      Departure
+                      <Text>Departure</Text>
                     </h2>
                     <DatePicker
                       selected={departureDate}
@@ -526,7 +544,7 @@ function FlightModal() {
                       Passengers
                     </h4>
                   ) : (
-                    <h4>Passenger</h4>
+                    <h4> Passenger</h4>
                   )}
                   <h6>{seatSelection}</h6>
                 </div>
@@ -543,7 +561,7 @@ function FlightModal() {
                   <div className={styles.bottomSection}>
                     <div className={styles.incrementSide}>
                       <div className={styles.increments}>
-                        Adults
+                        <Text>Adults</Text>
                         <NumberInput
                           size="xs"
                           maxW={16}
@@ -565,7 +583,7 @@ function FlightModal() {
                         </NumberInput>
                       </div>
                       <div className={styles.increments}>
-                        Child
+                        <Text>Child</Text>
                         <NumberInput
                           size="xs"
                           maxW={16}
@@ -587,7 +605,7 @@ function FlightModal() {
                         </NumberInput>
                       </div>
                       <div className={styles.increments}>
-                        Infant
+                        <Text>Infant</Text>
                         <NumberInput
                           size="xs"
                           maxW={16}
