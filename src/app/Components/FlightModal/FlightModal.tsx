@@ -81,8 +81,8 @@ function FlightModal() {
   const [infantPassengers, setInfantPassengers] = useState<number>(0);
 
   const [departureDate, setDepartureDate] = useState<string>("");
-  const [departingCity, setDepartingCity] = useState<Airport[]>([]);
-  const [destinationCity, setDestinationCity] = useState<Airport[]>([]);
+  const [departingCity, setDepartingCity] = useState<Airport | null>(null);
+  const [destinationCity, setDestinationCity] = useState<Airport | null>(null);
   const [returnDate, setReturnDate] = useState<string>("");
   /******************************** USE EFFECTS ********************************/
   useEffect(() => {
@@ -205,14 +205,15 @@ function FlightModal() {
   }
 
   function handlePassenger(e: React.ChangeEvent<HTMLInputElement>) {
-    const adultValue = numOfAdult.current?.value || 0;
-    const childValue = numOfChild.current?.value || 0;
-    const infantValue = numOfInfant.current?.value || 0;
+    const adultValue = parseInt(numOfAdult.current?.value ?? "0", 10);
+    const childValue = parseInt(numOfChild.current?.value ?? "0", 10);
+    const infantValue = parseInt(numOfInfant.current?.value ?? "0", 10);
 
     setAdultPassengers(adultValue);
     setChildPassengers(childValue);
     setInfantPassengers(infantValue);
   }
+
   function handleSearch() {
     setResultsModal(true);
     // console.log("departing city: ", departingCity);
@@ -560,7 +561,7 @@ function FlightModal() {
                     <h4>
                       {parseInt(adultPassengers) +
                         parseInt(infantPassengers) +
-                        parseInt(childPassengers)}{" "}
+                        parseInt(childPassengers)}
                       Passengers
                     </h4>
                   ) : (
