@@ -125,8 +125,8 @@ function FlightModal() {
   }, []);
   /******************************** API CALLS ********************************/
   /******************************** FUNCTIONS ********************************/
-  function setTripType(e: React.ChangeEvent<HTMLInputElement>) {
-    if (e.target.id === "return") {
+  function setTripType(e: React.MouseEvent<HTMLButtonElement>) {
+    if (e.currentTarget.id === "return") {
       /*************** update Frontend /***************/
       setReturnSelected(true);
       setOneWaySelected(false);
@@ -143,7 +143,7 @@ function FlightModal() {
       }
 
       /*************** update backend /***************/
-    } else if (e.target.id === "oneWay") {
+    } else if (e.currentTarget.id === "oneWay") {
       /*************** update Frontend /***************/
       setReturnSelected(false);
       setOneWaySelected(true);
@@ -658,7 +658,9 @@ function FlightModal() {
                           <Button
                             key={seatClass}
                             id={`${seatClass}`}
-                            onClick={(e) => handleSeatClassSelection(e)}
+                            onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+                              handleSeatClassSelection
+                            }
                           >
                             {seatClass}
                           </Button>
