@@ -32,6 +32,7 @@ interface Flight {
   totalBusinessClassSeats: number;
   totalEconomyClassSeats: number;
   totalFirstClassSeats: number;
+  flightSchedule: FlightSchedules; // Assuming flightSchedule is a single object
 }
 
 interface ResultsModalProps {
@@ -106,40 +107,52 @@ function ResultsModal({
   function handleOffClick() {
     setResultsModal(false);
   }
-
   function findMatchingToAndFromFlights() {
-    //One-way trip
-    const potFoundFlights = [];
-    const matchingFlight = [];
-    //check all flights from departing city going to destination city
-    // console.log("departing AirportID", departingCity.airportId);
-    // console.log("arriving AirportID", destinationCity.airportId);
+    // One-way trip
+    const potFoundFlights: Flight[] = [];
+    const matchingFlight: Flight[] = [];
+
+    // Check all flights from departing city going to destination city
     for (let flight of allFlights) {
       if (
+        departingCity &&
+        destinationCity &&
         flight.fromAirport === departingCity.airportId &&
         flight.toAirport === destinationCity.airportId
       ) {
         potFoundFlights.push(flight);
       }
     }
+
     for (let flightSchedule of flightSchedules) {
-      for (let flights of potFoundFlights) {
-        if (flights.flightId === flightSchedule.flightId) {
-          matchingFlight.push({
-            flightNum: flights.flightNumber,
-            flightID: flights.flightId,
+      for (let flight of potFoundFlights) {
+        if (flight.flightId === flightSchedule.flightId) {
+          const newFlight = {
+            aircraftId: flight.aircraftId,
+            createdAt: flight.createdAt,
+            flightId: flight.flightId,
+            flightNumber: flight.flightNumber,
+            fromAirport: flight.fromAirport,
+            toAirport: flight.toAirport,
+            totalBusinessClassSeats: flight.totalBusinessClassSeats,
+            totalEconomyClassSeats: flight.totalEconomyClassSeats,
+            totalFirstClassSeats: flight.totalFirstClassSeats,
             flightSchedule: flightSchedule,
-          });
+          };
+
+          matchingFlight.push(newFlight);
         }
       }
     }
+
     console.log("POT FF", potFoundFlights);
     console.log("FOUNDYYYYYYYYYYYUYUYYUYUYUYUYUYu FLIGHTS", matchingFlight);
     setFoundMatchingFlights(matchingFlight);
     // if no flights available that day check all dates around selected departing dates
-    //check if numOfPassengers selected is available on flight
-    //return trip
+    // check if numOfPassengers selected is available on flight
+    // return trip
   }
+
   function showLoginOrSignUp() {
     setShowFormModal(true);
   }
@@ -178,7 +191,7 @@ function ResultsModal({
               return (
                 <div className={styles.flightsResults}>
                   <h4 style={{ fontWeight: "bolder" }}>
-                    FLIGHT #{foundFlight.flightNum}{" "}
+                    FLIGHT #{foundFlight.flightNumber}{" "}
                   </h4>
                   <h4>
                     DEPARTURE
