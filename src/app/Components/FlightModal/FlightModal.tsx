@@ -204,7 +204,11 @@ function FlightModal() {
     }
   }
 
-  function handlePassenger(e: React.ChangeEvent<HTMLInputElement>) {
+  function handlePassenger() {
+    const numOfChild = useRef<HTMLInputElement>(null);
+    const numOfAdult = useRef<HTMLInputElement>(null);
+    const numOfInfant = useRef<HTMLInputElement>(null);
+
     const adultValue = parseInt(numOfAdult.current?.value ?? "0", 10);
     const childValue = parseInt(numOfChild.current?.value ?? "0", 10);
     const infantValue = parseInt(numOfInfant.current?.value ?? "0", 10);
