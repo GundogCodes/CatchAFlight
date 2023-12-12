@@ -45,7 +45,7 @@ function Frontpage() {
   ];
 
   return (
-    <div className={styles.FrontPage}> 
+    <div className={styles.FrontPage}>
       <div className={styles.top}>
         <h1>FLIGHT CLUB</h1>
         <nav>
@@ -127,6 +127,7 @@ function Frontpage() {
         padding={"5px"}
         borderRadius={"18px"}
         margin={"20px"}
+        index={1}
       >
         {steps.map((step, index) => (
           <Step key={index}>
