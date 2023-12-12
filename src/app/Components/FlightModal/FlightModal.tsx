@@ -454,9 +454,7 @@ function FlightModal() {
                   {departureDate !== null && (
                     <>
                       {returnSelected !== null && returnDate !== null ? (
-                        <div className={styles.tripDisplay}>
-                          {/* ... rest of the code */}
-                        </div>
+                        <div className={styles.tripDisplay}></div>
                       ) : (
                         <div className={styles.oneWayTrip}>
                           <h2 style={{ borderBottom: "solid 1px black" }}>
