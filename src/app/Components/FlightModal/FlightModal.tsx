@@ -28,10 +28,10 @@ import "react-datepicker/dist/react-datepicker.css";
 import ResultsModal from "../ResultsModal/ResultsModal";
 function FlightModal() {
   /******************************** VARIABLES ********************************/
-  const numOfChild = useRef(null);
-  const numOfAdult = useRef(null);
-  const numOfInfant = useRef(null);
-  const cardBody = useRef(null);
+  const numOfChild = useRef<HTMLInputElement>(null);
+  const numOfAdult = useRef<HTMLInputElement>(null);
+  const numOfInfant = useRef<HTMLInputElement>(null);
+  const cardBody = useRef<HTMLDivElement>(null);
   interface Airport {
     airportCode: string;
     airportId: string;
@@ -218,10 +218,6 @@ function FlightModal() {
   }
 
   function handlePassenger() {
-    const numOfChild = useRef<HTMLInputElement>(null);
-    const numOfAdult = useRef<HTMLInputElement>(null);
-    const numOfInfant = useRef<HTMLInputElement>(null);
-
     const adultValue = parseInt(numOfAdult.current?.value ?? "0", 10);
     const childValue = parseInt(numOfChild.current?.value ?? "0", 10);
     const infantValue = parseInt(numOfInfant.current?.value ?? "0", 10);
@@ -242,8 +238,9 @@ function FlightModal() {
     // console.log("infant passengers: ", infantPassengers);
     // console.log("seat class: ", seatSelection);
   }
-  function handleSeatClassSelection(e: React.ChangeEvent<HTMLInputElement>) {
-    const classType = e.target.id;
+  function handleSeatClassSelection(e: React.MouseEvent<HTMLButtonElement>) {
+    console.log("E", e);
+    const classType = e.currentTarget.id;
     const seatTypes = ["First Class", "Business", "Economy"];
 
     setSeatSelection(classType);
@@ -265,7 +262,11 @@ function FlightModal() {
   /******************************** CODE ********************************/
   console.log("DEPARTING CITY", departingCity);
   console.log("DESTINATION CITY CITY", destinationCity);
-
+  console.log("DEPARTDATE!!", departureDate);
+  console.log("Adults", adultPassengers);
+  console.log("Kids", childPassengers);
+  console.log("Infants", infantPassengers);
+  console.log("seat Type: ", seatSelection);
   return (
     <div className={styles.FlightModal}>
       {resultsModal ? (
@@ -456,7 +457,7 @@ function FlightModal() {
                     <>
                       <h2 id={styles.line}> _______</h2>
                       <h4>
-                        <Text>Select</Text>{" "}
+                        <Text>Select Departure Date</Text>{" "}
                       </h4>
                     </>
                   ) : (
@@ -467,15 +468,18 @@ function FlightModal() {
                       {returnSelected !== null && returnDate !== null ? (
                         <div className={styles.tripDisplay}></div>
                       ) : (
-                        <div className={styles.oneWayTrip}>
+                        <div
+                          style={{ height: "13vh" }}
+                          className={styles.oneWayTrip}
+                        >
                           <h2 style={{ borderBottom: "solid 1px black" }}>
                             <Text> Departing Date</Text>
                           </h2>
-                          <h4>{departureDate.toString().slice(3, 7)}</h4>
-                          <h4 id={styles.dateNum}>
+                          <p>{departureDate.toString().slice(3, 7)}</p>
+                          <p style={{ color: "rgb(90,151,290)" }}>
                             {departureDate.toString().slice(7, 10)}
-                          </h4>
-                          <h4>{departureDate.toString().slice(0, 3)}</h4>
+                          </p>
+                          <p>{departureDate.toString().slice(0, 3)}</p>
                         </div>
                       )}
                     </>
@@ -554,12 +558,12 @@ function FlightModal() {
                   infantPassengers > 0 ||
                   childPassengers > 0 ? (
                     <h4>
+                      Passengers{" "}
                       {String(
                         parseInt(adultPassengers.toString()) +
                           parseInt(infantPassengers.toString()) +
                           parseInt(childPassengers.toString())
                       )}
-                      Passengers
                     </h4>
                   ) : (
                     <h4> Passenger</h4>
@@ -654,9 +658,9 @@ function FlightModal() {
                         return (
                           <Button
                             key={seatClass}
-                            id={`${seatClass}`}
+                            id={seatClass}
                             onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-                              handleSeatClassSelection
+                              handleSeatClassSelection(e)
                             }
                           >
                             {seatClass}
