@@ -65,7 +65,7 @@ function Frontpage() {
               >
                 Book and Manage
               </MenuButton>
-              <MenuList width={{ base: "95vw", md: "10vw" }}>
+              <MenuList width={{ base: "80vw", md: "10vw" }}>
                 <MenuItem>Book a flight </MenuItem>
                 <MenuItem>Meet and greet</MenuItem>
                 <MenuItem>Home check-in</MenuItem>
@@ -88,7 +88,7 @@ function Frontpage() {
               >
                 Fly with us
               </MenuButton>
-              <MenuList width={{ base: "95vw", md: "10vw" }}>
+              <MenuList width={{ base: "80vw", md: "10vw" }}>
                 <MenuItem>Plan</MenuItem>
                 <MenuItem>Baggage</MenuItem>
                 <MenuItem> Fare types and rules</MenuItem>
@@ -110,7 +110,7 @@ function Frontpage() {
               >
                 Destinations
               </MenuButton>
-              <MenuList width={{ base: "95vw", md: "10vw" }}>
+              <MenuList width={{ base: "80vw", md: "10vw" }}>
                 <MenuItem>Where we fly</MenuItem>
                 <MenuItem>Popular Getaways</MenuItem>
                 <MenuItem>Explore</MenuItem>
