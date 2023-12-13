@@ -125,7 +125,7 @@ function FlightModal() {
     getAirports();
     getFlights();
   }, []);
-  /******************************** API CALLS ********************************/
+
   /******************************** FUNCTIONS ********************************/
   function setTripType(e: React.MouseEvent<HTMLButtonElement>) {
     if (e.currentTarget.id === "return") {
@@ -164,8 +164,14 @@ function FlightModal() {
       /*************** update backend /***************/
     }
   }
-  function handleFromSelect(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleFromSelect(
+    airportName: string,
+    e: React.ChangeEvent<HTMLInputElement>
+  ) {
     /*************** update frontend /***************/
+    console.log("Selected innerText:", e.currentTarget.innerText);
+    console.log("SELECTED AIRPORT: ", airportName);
+
     const chosenCity = e.target.innerText;
     const fromSelected = document.getElementById(
       "selectedCity1"
@@ -174,18 +180,23 @@ function FlightModal() {
 
     if (fromSelected && h6) {
       fromSelected.innerText = chosenCity;
-      h6.innerText = `Departing from ${chosenCity}`;
+      h6.innerText = `Departing from ${airportName}`;
     }
 
     /*************** update backend /***************/
     for (let airport of airports) {
-      if (airport.airportName === chosenCity) {
+      console.log(airport.airportName);
+      if (airport.airportName === airportName) {
+        console.log("FUCK YA");
         setDepartingCity(airport);
       }
     }
   }
 
-  function handleToSelect(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleToSelect(
+    airportName: string,
+    e: React.ChangeEvent<HTMLInputElement>
+  ) {
     /*************** update frontend /***************/
     const chosenCity = e.target.innerText;
     const fromSelected = document.getElementById(
@@ -196,11 +207,11 @@ function FlightModal() {
     if (fromSelected && h62) {
       fromSelected.innerText = chosenCity;
       /*************** update backend /***************/
-      h62.innerText = `Destination: ${chosenCity}`;
+      h62.innerText = `Destination: ${airportName}`;
     }
 
     for (let airport of airports) {
-      if (airport.airportName === chosenCity) {
+      if (airport.airportName === airportName) {
         setDestinationCity(airport);
       }
     }
@@ -252,10 +263,9 @@ function FlightModal() {
   }
 
   /******************************** CODE ********************************/
-  // if(window.innerWidth < 900){
-  //   console.log('SMALLL SCREEEn')
-  //   cardBody.current.style.flex ='display'
-  // }
+  console.log("DEPARTING CITY", departingCity);
+  console.log("DESTINATION CITY CITY", destinationCity);
+
   return (
     <div className={styles.FlightModal}>
       {resultsModal ? (
@@ -369,8 +379,9 @@ function FlightModal() {
                     return (
                       <MenuItem
                         key={airport.airportId}
-                        onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-                          handleFromSelect
+                        id={airport.city}
+                        onClick={(e) =>
+                          handleFromSelect(airport.airportName, e)
                         }
                       >
                         {airport.city}
@@ -412,9 +423,8 @@ function FlightModal() {
                     return (
                       <MenuItem
                         key={airport.airportId}
-                        onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-                          handleToSelect
-                        }
+                        id={airport.city}
+                        onClick={(e) => handleToSelect(airport.airportName, e)}
                       >
                         {airport.city}
                       </MenuItem>
