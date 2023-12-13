@@ -169,9 +169,6 @@ function FlightModal() {
     e: React.MouseEvent<HTMLButtonElement>
   ) {
     /*************** update frontend /***************/
-    console.log("Selected innerText:", e.currentTarget.innerText);
-    console.log("SELECTED AIRPORT: ", airportName);
-
     const chosenCity = e.currentTarget.innerText;
     const fromSelected = document.getElementById(
       "selectedCity1"
@@ -185,7 +182,6 @@ function FlightModal() {
 
     /*************** update backend /***************/
     for (let airport of airports) {
-      console.log(airport.airportName);
       if (airport.airportName === airportName) {
         setDepartingCity(airport);
       }
@@ -230,7 +226,6 @@ function FlightModal() {
     setResultsModal(true);
   }
   function handleSeatClassSelection(e: React.MouseEvent<HTMLButtonElement>) {
-    console.log("E", e);
     const classType = e.currentTarget.id;
     const seatTypes = ["First Class", "Business", "Economy"];
 

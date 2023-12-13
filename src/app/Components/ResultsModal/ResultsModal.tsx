@@ -32,7 +32,7 @@ interface Flight {
   totalBusinessClassSeats: number;
   totalEconomyClassSeats: number;
   totalFirstClassSeats: number;
-  flightSchedule: FlightSchedules; // Assuming flightSchedule is a single object
+  flightSchedule: FlightSchedules;
 }
 
 interface ResultsModalProps {
@@ -87,28 +87,17 @@ function ResultsModal({
     Array<Flight>
   >([]);
   const [showFormModal, setShowFormModal] = useState<boolean>(false);
-
-  // console.log("FLIGHT SCHEDULES", flightSchedules);
-  // console.log("ALL FLIGHTS", allFlights);
-  // console.log("ALL AIRPORTS", airports);
-  // console.log("departing city: ", departingCity);
-  // console.log("destination city: ", destinationCity);
-  // console.log("departure date: ", departureDate);
-  // console.log("return date: ", returnDate);
-  // console.log("adult passengers: ", adultPassengers);
-  // console.log("child passengers: ", childPassengers);
-  // console.log("infant passengers: ", infantPassengers);
-  // console.log("seat class: ", seatSelection);
-  console.log(
-    "********************************** INSIDE RESULT MODAL **********************************"
-  );
-  console.log("DEPARTING CITY", departingCity);
-  console.log("DESTINATION CITY CITY", destinationCity);
-  console.log("DEPARTDATE!!", departureDate);
-  console.log("Adults", adultPassengers);
-  console.log("Kids", childPassengers);
-  console.log("Infants", infantPassengers);
-  console.log("seat Type: ", seatSelection);
+  // console.log(
+  //   "********************************** INSIDE RESULT MODAL **********************************"
+  // );
+  // console.log("DEPARTING CITY", departingCity);
+  // console.log("DESTINATION CITY CITY", destinationCity);
+  // console.log("DEPARTDATE!!", departureDate);
+  // console.log("Adults", adultPassengers);
+  // console.log("Kids", childPassengers);
+  // console.log("Infants", infantPassengers);
+  // console.log("seat Type: ", seatSelection);
+  console.log(airports);
   /******************************* USE EFFECTS *******************************/
   useEffect(() => {
     findMatchingToAndFromFlights();
@@ -124,6 +113,7 @@ function ResultsModal({
 
     // Check all flights from departing city going to destination city
     for (let flight of allFlights) {
+      console.log(flight);
       if (
         departingCity &&
         destinationCity &&
@@ -133,7 +123,7 @@ function ResultsModal({
         potFoundFlights.push(flight);
       }
     }
-
+    console.log("POT FLIGHTS", potFoundFlights);
     for (let flightSchedule of flightSchedules) {
       for (let flight of potFoundFlights) {
         if (flight.flightId === flightSchedule.flightId) {
@@ -179,12 +169,14 @@ function ResultsModal({
           >
             <CloseIcon />
           </p>
-          <h2>Login</h2>
-          <label>Username:</label>
-          <input></input>
-          <label>Password:</label>
-          <input></input>
-          <Button marginTop={"10px"}>Login</Button>
+          <div className={styles.middleSection}>
+            <h2>Login</h2>
+            <label>Username:</label>
+            <input></input>
+            <label>Password:</label>
+            <input></input>
+            <Button marginTop={"10px"}>Login</Button>
+          </div>
           <p id={styles.signUpPrompt}>Don't have an account? Sign up here</p>
         </div>
       ) : (
@@ -201,7 +193,7 @@ function ResultsModal({
               return (
                 <div className={styles.flightsResults}>
                   <h4 style={{ fontWeight: "bolder" }}>
-                    FLIGHT #{foundFlight.flightNumber}{" "}
+                    FLIGHT <br />#{foundFlight.flightNumber}{" "}
                   </h4>
                   <h4>
                     DEPARTURE
@@ -241,7 +233,12 @@ function ResultsModal({
                     </div>
                   </h4>
                   <h4>
-                    <Button onClick={showLoginOrSignUp}>Book</Button>
+                    <Button
+                      className={styles.button}
+                      onClick={showLoginOrSignUp}
+                    >
+                      Book
+                    </Button>
                   </h4>
                 </div>
               );
