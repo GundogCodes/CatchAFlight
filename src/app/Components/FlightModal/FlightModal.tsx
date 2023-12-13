@@ -166,13 +166,13 @@ function FlightModal() {
   }
   function handleFromSelect(
     airportName: string,
-    e: React.ChangeEvent<HTMLInputElement>
+    e: React.MouseEvent<HTMLButtonElement>
   ) {
     /*************** update frontend /***************/
     console.log("Selected innerText:", e.currentTarget.innerText);
     console.log("SELECTED AIRPORT: ", airportName);
 
-    const chosenCity = e.target.innerText;
+    const chosenCity = e.currentTarget.innerText;
     const fromSelected = document.getElementById(
       "selectedCity1"
     ) as HTMLDivElement | null;
@@ -187,7 +187,6 @@ function FlightModal() {
     for (let airport of airports) {
       console.log(airport.airportName);
       if (airport.airportName === airportName) {
-        console.log("FUCK YA");
         setDepartingCity(airport);
       }
     }
@@ -195,10 +194,10 @@ function FlightModal() {
 
   function handleToSelect(
     airportName: string,
-    e: React.ChangeEvent<HTMLInputElement>
+    e: React.MouseEvent<HTMLButtonElement>
   ) {
     /*************** update frontend /***************/
-    const chosenCity = e.target.innerText;
+    const chosenCity = e.currentTarget.innerText;
     const fromSelected = document.getElementById(
       "selectedCity2"
     ) as HTMLDivElement | null;
@@ -229,14 +228,6 @@ function FlightModal() {
 
   function handleSearch() {
     setResultsModal(true);
-    // console.log("departing city: ", departingCity);
-    // console.log("destination city: ", destinationCity);
-    // console.log("departure date: ", departureDate);
-    // console.log("return date: ", returnDate);
-    // console.log("adult passengers: ", adultPassengers);
-    // console.log("child passengers: ", childPassengers);
-    // console.log("infant passengers: ", infantPassengers);
-    // console.log("seat class: ", seatSelection);
   }
   function handleSeatClassSelection(e: React.MouseEvent<HTMLButtonElement>) {
     console.log("E", e);
@@ -260,13 +251,7 @@ function FlightModal() {
   }
 
   /******************************** CODE ********************************/
-  console.log("DEPARTING CITY", departingCity);
-  console.log("DESTINATION CITY CITY", destinationCity);
-  console.log("DEPARTDATE!!", departureDate);
-  console.log("Adults", adultPassengers);
-  console.log("Kids", childPassengers);
-  console.log("Infants", infantPassengers);
-  console.log("seat Type: ", seatSelection);
+
   return (
     <div className={styles.FlightModal}>
       {resultsModal ? (
@@ -381,7 +366,7 @@ function FlightModal() {
                       <MenuItem
                         key={airport.airportId}
                         id={airport.city}
-                        onClick={(e) =>
+                        onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
                           handleFromSelect(airport.airportName, e)
                         }
                       >
@@ -425,7 +410,9 @@ function FlightModal() {
                       <MenuItem
                         key={airport.airportId}
                         id={airport.city}
-                        onClick={(e) => handleToSelect(airport.airportName, e)}
+                        onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+                          handleToSelect(airport.airportName, e)
+                        }
                       >
                         {airport.city}
                       </MenuItem>

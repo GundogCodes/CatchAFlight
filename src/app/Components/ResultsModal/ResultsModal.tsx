@@ -99,6 +99,16 @@ function ResultsModal({
   // console.log("child passengers: ", childPassengers);
   // console.log("infant passengers: ", infantPassengers);
   // console.log("seat class: ", seatSelection);
+  console.log(
+    "********************************** INSIDE RESULT MODAL **********************************"
+  );
+  console.log("DEPARTING CITY", departingCity);
+  console.log("DESTINATION CITY CITY", destinationCity);
+  console.log("DEPARTDATE!!", departureDate);
+  console.log("Adults", adultPassengers);
+  console.log("Kids", childPassengers);
+  console.log("Infants", infantPassengers);
+  console.log("seat Type: ", seatSelection);
   /******************************* USE EFFECTS *******************************/
   useEffect(() => {
     findMatchingToAndFromFlights();
