@@ -65,7 +65,7 @@ function Frontpage() {
               >
                 Book and Manage
               </MenuButton>
-              <MenuList>
+              <MenuList width={{ base: "95vw", md: "10vw" }}>
                 <MenuItem>Book a flight </MenuItem>
                 <MenuItem>Meet and greet</MenuItem>
                 <MenuItem>Home check-in</MenuItem>
@@ -88,7 +88,7 @@ function Frontpage() {
               >
                 Fly with us
               </MenuButton>
-              <MenuList>
+              <MenuList width={{ base: "95vw", md: "10vw" }}>
                 <MenuItem>Plan</MenuItem>
                 <MenuItem>Baggage</MenuItem>
                 <MenuItem> Fare types and rules</MenuItem>
@@ -110,7 +110,7 @@ function Frontpage() {
               >
                 Destinations
               </MenuButton>
-              <MenuList>
+              <MenuList width={{ base: "95vw", md: "10vw" }}>
                 <MenuItem>Where we fly</MenuItem>
                 <MenuItem>Popular Getaways</MenuItem>
                 <MenuItem>Explore</MenuItem>
@@ -123,15 +123,17 @@ function Frontpage() {
       </div>
       <Stepper
         border={"solid 2px white"}
-        width={"77.5vw"}
+        width={{ base: "90vw", md: "77.5vw" }}
+        display={{ base: "none", md: "inherit" }}
         padding={"5px"}
         borderRadius={"18px"}
-        margin={"20px"}
+        margin={{ base: "10px", md: "20px" }}
         index={1}
+        overflowX={"hidden"}
       >
         {steps.map((step, index) => (
           <Step key={index}>
-            <StepIndicator>
+            <StepIndicator width={{ base: "5vw", md: "3vw" }}>
               <StepStatus
                 complete={<StepIcon />}
                 incomplete={<StepNumber />}
@@ -150,56 +152,68 @@ function Frontpage() {
       </Stepper>
       <FlightModal />
       <div className={styles.bottom}>
-        <Card height={"95%"} width={"24%"}>
+        <Card height={"95%"} width={"24%"} id={styles.card}>
           <CardBody
             display={"flex"}
             flexDirection={"column"}
             alignItems={"center"}
           >
             <Text>
-              <Image src="https://www.flydubai.com/en/media/skywards2_tcm8-163766_w265.jpg" />
+              <Image
+                src="https://www.flydubai.com/en/media/skywards2_tcm8-163766_w265.jpg"
+                id={styles.cardBody}
+              />
               <span>Emirates Skywards</span>
               <br />
               The Emirates Skywards programme has ...
             </Text>
           </CardBody>
         </Card>
-        <Card height={"95%"} width={"24%"}>
+        <Card height={"95%"} width={"24%"} id={styles.card}>
           <CardBody
             display={"flex"}
             flexDirection={"column"}
             alignItems={"center"}
           >
             <Text>
-              <Image src="https://www.flydubai.com/en/media/Buy-extras-flydubai-2x-668x460_tcm8-165717_w265.jpg" />
+              <Image
+                src="https://www.flydubai.com/en/media/Buy-extras-flydubai-2x-668x460_tcm8-165717_w265.jpg"
+                id={styles.cardBody}
+              />
               <span>Holidays By FlightClub</span>
               <br />
               We make it our mission to create exciting, memory ..
             </Text>
           </CardBody>
         </Card>
-        <Card height={"95%"} width={"24%"}>
+        <Card height={"95%"} width={"24%"} id={styles.card}>
           <CardBody
             display={"flex"}
             flexDirection={"column"}
             alignItems={"center"}
           >
             <Text>
-              <Image src="https://www.flydubai.com/en/media/Holidays-callout-homepage-2x-668x460_tcm8-164517_w265.jpg" />
+              <Image
+                src="https://www.flydubai.com/en/media/Holidays-callout-homepage-2x-668x460_tcm8-164517_w265.jpg"
+                id={styles.cardBody}
+              />
               <span>Add Extras</span>
               <br />
               Select your preferred seat and meal, add ...
             </Text>
           </CardBody>
         </Card>
-        <Card height={"95%"} width={"24%"}>
+        <Card height={"95%"} width={"24%"} id={styles.card}>
           <CardBody
             display={"flex"}
             flexDirection={"column"}
             alignItems={"center"}
           >
             <Text>
-              <Image src="https://www.flydubai.com/en/media/Flight-status-flydubai-2x-668x460_tcm8-168029_w265.jpg" />
+              <Image
+                src="https://www.flydubai.com/en/media/Flight-status-flydubai-2x-668x460_tcm8-168029_w265.jpg"
+                id={styles.cardBody}
+              />
               <span>Flight Status</span>
               <br />
               Setting off for the airport? Before you go, here's where ...

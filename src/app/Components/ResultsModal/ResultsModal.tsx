@@ -88,17 +88,17 @@ function ResultsModal({
   >([]);
   const [showFormModal, setShowFormModal] = useState<boolean>(false);
 
-  console.log("FLIGHT SCHEDULES", flightSchedules);
-  console.log("ALL FLIGHTS", allFlights);
-  console.log("ALL AIRPORTS", airports);
-  console.log("departing city: ", departingCity);
-  console.log("destination city: ", destinationCity);
-  console.log("departure date: ", departureDate);
-  console.log("return date: ", returnDate);
-  console.log("adult passengers: ", adultPassengers);
-  console.log("child passengers: ", childPassengers);
-  console.log("infant passengers: ", infantPassengers);
-  console.log("seat class: ", seatSelection);
+  // console.log("FLIGHT SCHEDULES", flightSchedules);
+  // console.log("ALL FLIGHTS", allFlights);
+  // console.log("ALL AIRPORTS", airports);
+  // console.log("departing city: ", departingCity);
+  // console.log("destination city: ", destinationCity);
+  // console.log("departure date: ", departureDate);
+  // console.log("return date: ", returnDate);
+  // console.log("adult passengers: ", adultPassengers);
+  // console.log("child passengers: ", childPassengers);
+  // console.log("infant passengers: ", infantPassengers);
+  // console.log("seat class: ", seatSelection);
   /******************************* USE EFFECTS *******************************/
   useEffect(() => {
     findMatchingToAndFromFlights();

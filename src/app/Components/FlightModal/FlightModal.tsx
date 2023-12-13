@@ -318,12 +318,12 @@ function FlightModal() {
           </Button>
         )} */}
         <h3>
-          <Text>Book A Flight</Text>
+          <Text>Catch A Flight</Text>
         </h3>
       </aside>
       <Card
         height={{ base: "80vh", md: "35vh" }}
-        width={{ base: "75vw", md: "79.5vw" }}
+        width={{ base: "86vw", md: "79.5vw" }}
         display={{ base: "flex", md: "flex" }}
         justifyContent={{ base: "center", md: "center" }}
         alignItems={"center"}
@@ -348,7 +348,7 @@ function FlightModal() {
                 _hover={{ bg: "gray.400" }}
                 _expanded={{ bg: "blue.400" }}
                 _focus={{ boxShadow: "outline" }}
-                width={{ base: "60vw", md: "18vw" }}
+                width={{ base: "75vw", md: "18vw" }}
                 height={{ base: "16vh", md: "10vw" }}
                 maxWidth={"500px"}
                 marginTop={"2vh"}
@@ -363,7 +363,7 @@ function FlightModal() {
                   </h6>
                 </div>
               </MenuButton>
-              <MenuList width={{ base: "60vw", md: "18vw" }}>
+              <MenuList width={{ base: "75vw", md: "18vw" }}>
                 {airports ? (
                   airports.map((airport) => {
                     return (
@@ -393,7 +393,7 @@ function FlightModal() {
                 _hover={{ bg: "gray.400" }}
                 _expanded={{ bg: "blue.400" }}
                 _focus={{ boxShadow: "outline" }}
-                width={{ base: "60vw", md: "18vw" }}
+                width={{ base: "75vw", md: "18vw" }}
                 height={{ base: "16vh", md: "10vw" }}
                 maxWidth={"500px"}
                 marginTop={"2vh"}
@@ -406,7 +406,7 @@ function FlightModal() {
                   </h6>
                 </div>
               </MenuButton>
-              <MenuList width={{ base: "60vw", md: "18vw" }}>
+              <MenuList width={{ base: "75vw", md: "18vw" }}>
                 {airports ? (
                   airports.map((airport) => {
                     return (
@@ -436,7 +436,7 @@ function FlightModal() {
                 _hover={{ bg: "gray.400" }}
                 _expanded={{ bg: "blue.400" }}
                 _focus={{ boxShadow: "outline" }}
-                width={{ base: "60vw", md: "18vw" }}
+                width={{ base: "75vw", md: "18vw" }}
                 height={{ base: "16vh", md: "10vw" }}
                 maxWidth={"500px"}
                 marginTop={"2vh"}
@@ -473,7 +473,7 @@ function FlightModal() {
                 </div>
               </MenuButton>
 
-              <MenuList width={{ base: "60vw", md: "18vw" }}>
+              <MenuList width={{ base: "75vw", md: "18vw" }}>
                 {returnSelected ? (
                   <div className={styles.datePicker}>
                     <aside>
@@ -533,7 +533,7 @@ function FlightModal() {
                 _hover={{ bg: "gray.400" }}
                 _expanded={{ bg: "blue.400" }}
                 _focus={{ boxShadow: "outline" }}
-                width={{ base: "60vw", md: "18vw" }}
+                width={{ base: "75vw", md: "18vw" }}
                 height={{ base: "16vh", md: "10vw" }}
                 maxWidth={"500px"}
                 marginTop={"2vh"}
@@ -558,7 +558,7 @@ function FlightModal() {
                 </div>
               </MenuButton>
               <MenuList
-                width={{ base: "60vw", md: "25vw" }}
+                width={{ base: "75vw", md: "25vw" }}
                 height={"40vh"}
                 padding={"2px"}
               >
